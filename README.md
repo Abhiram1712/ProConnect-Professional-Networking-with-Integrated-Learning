@@ -1,6 +1,7 @@
-# Unstop Clone
+# ProConnect: Professional Networking with Integrated Learning 
 
-This is a clone of the Unstop platform built with the MERN stack (MongoDB, Express, React, Node.js).
+
+This platform is built with the MERN stack (MongoDB, Express, React, Node.js).
 
 ## Features
 
