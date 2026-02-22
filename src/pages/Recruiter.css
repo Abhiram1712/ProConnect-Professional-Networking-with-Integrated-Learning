@@ -1,0 +1,79 @@
+/* ============================================
+   RECRUITER PAGE — Talent Search
+   ============================================ */
+
+.search-bar-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.candidate-search-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.candidate-search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.candidate-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.candidate-card {
+    padding: 1.5rem;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: all var(--transition);
+}
+
+.candidate-card:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
+}
+
+.skill-tag {
+    background: var(--primary-bg);
+    color: var(--primary);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.78rem;
+    margin-right: 0.35rem;
+    margin-bottom: 0.35rem;
+    display: inline-block;
+    font-weight: 500;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .candidate-list {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-bar-row {
+        flex-direction: column;
+    }
+
+    .candidate-list {
+        grid-template-columns: 1fr;
+    }
+}

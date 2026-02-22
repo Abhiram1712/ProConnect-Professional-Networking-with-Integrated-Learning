@@ -1,0 +1,167 @@
+/* ============================================
+   PROFILE PAGE — User Settings
+   ============================================ */
+
+.profile-page {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+    animation: fadeIn 0.35s ease;
+}
+
+.profile-page h1 {
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.profile-card {
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+}
+
+/* ========== USER INFO CARD ========== */
+.user-info-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: sticky;
+    top: calc(var(--header-height) + 1.5rem);
+}
+
+.avatar-placeholder {
+    width: 110px;
+    height: 110px;
+    background: linear-gradient(135deg, var(--primary-bg), #dbeafe);
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+    border: 3px solid white;
+    box-shadow: var(--shadow-sm);
+}
+
+.user-info-card h2 {
+    margin-bottom: 0.35rem;
+    font-size: 1.35rem;
+}
+
+.email-text {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+/* ========== EDIT FORM CARD ========== */
+.edit-form-card {
+    position: relative;
+}
+
+.edit-form-card .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.edit-form-card .form-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    margin-bottom: 0.45rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.edit-form-card .form-group input,
+.edit-form-card .form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    color: var(--text);
+}
+
+.edit-form-card .form-group input:focus,
+.edit-form-card .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.save-btn {
+    width: 100%;
+    gap: 0.5rem;
+    padding: 0.85rem;
+    font-size: 1rem;
+}
+
+.profile-page .alert {
+    padding: 1rem 1.25rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: var(--radius);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.profile-page .alert.success {
+    background: var(--success-bg);
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+
+.profile-page .alert.error {
+    background: var(--error-bg);
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+    .profile-grid {
+        grid-template-columns: 240px 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .user-info-card {
+        position: static;
+    }
+
+    .profile-card {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-page {
+        padding: 1rem 0.75rem;
+    }
+
+    .profile-card {
+        padding: 1.25rem;
+    }
+
+    .avatar-placeholder {
+        width: 90px;
+        height: 90px;
+    }
+}

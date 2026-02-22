@@ -1,0 +1,332 @@
+/* ============================================
+   LEARN / MENTORSHIP / BLOGS — Shared Card Pages
+   ============================================ */
+
+/* ========== LEARN PAGE ========== */
+.learn-page {
+    padding: 2rem 0 4rem;
+    animation: fadeIn 0.35s ease;
+}
+
+.learn-page .page-title {
+    text-align: center;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    margin-bottom: 0.5rem;
+}
+
+.learn-page .page-subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.course-card {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    transition: all var(--transition);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.course-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--border);
+}
+
+.course-card .course-emoji {
+    font-size: 2.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.course-card h3 {
+    font-size: 1.15rem;
+    margin: 0;
+    color: var(--text);
+}
+
+.course-card .course-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    flex: 1;
+}
+
+.course-card .course-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-light);
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.course-card .btn {
+    margin-top: 0.5rem;
+}
+
+.enrolled-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    background: #d1fae5;
+    color: #065f46;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+/* ========== MENTORSHIP PAGE ========== */
+.mentorship-page {
+    padding: 2rem 0 4rem;
+    animation: fadeIn 0.35s ease;
+}
+
+.mentors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.mentor-card {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    transition: all var(--transition);
+    text-align: center;
+}
+
+.mentor-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.mentor-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-bg), #dbeafe);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary);
+    border: 3px solid white;
+    box-shadow: var(--shadow-sm);
+}
+
+.mentor-card h3 {
+    font-size: 1.1rem;
+    margin: 0 0 0.25rem;
+}
+
+.mentor-card .mentor-specialty {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    margin-bottom: 0.75rem;
+}
+
+.mentor-card .mentor-skills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+}
+
+.mentor-card .mentor-skills span {
+    font-size: 0.72rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-full);
+    background: var(--primary-bg);
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.mentor-card .mentor-stats {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--border-light);
+    margin-bottom: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.mentor-card .mentor-stats strong {
+    color: var(--text);
+    font-weight: 700;
+}
+
+.mentor-card .mentor-rate {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+}
+
+/* ========== BLOGS PAGE ========== */
+.blogs-page {
+    padding: 2rem 0 4rem;
+    animation: fadeIn 0.35s ease;
+}
+
+.blogs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+}
+
+.blog-card {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    transition: all var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.blog-card .blog-category {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.blog-card h3 {
+    font-size: 1.15rem;
+    margin: 0 0 0.5rem;
+    line-height: 1.35;
+}
+
+.blog-card .blog-preview {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    flex: 1;
+}
+
+.blog-card .blog-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-light);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.blog-card .blog-author {
+    font-weight: 600;
+    color: var(--text);
+}
+
+.blog-card .blog-full-content {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-light);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    animation: slideUp 0.3s ease;
+}
+
+/* ========== MODALS (SHARED) ========== */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease;
+}
+
+.modal-content {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    max-width: 480px;
+    width: 90%;
+    box-shadow: var(--shadow-lg);
+    animation: scaleIn 0.25s ease;
+}
+
+.modal-content h3 {
+    margin: 0 0 1rem;
+    font-size: 1.2rem;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    justify-content: flex-end;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+
+    .courses-grid,
+    .mentors-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+
+    .blogs-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .courses-grid,
+    .mentors-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .learn-page,
+    .mentorship-page,
+    .blogs-page {
+        padding: 1.5rem 0 3rem;
+    }
+
+    .course-card,
+    .mentor-card,
+    .blog-card {
+        padding: 1.25rem;
+    }
+
+    .modal-content {
+        padding: 1.5rem;
+        width: 95%;
+    }
+}

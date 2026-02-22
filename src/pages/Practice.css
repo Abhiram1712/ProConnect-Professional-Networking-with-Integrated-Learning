@@ -1,0 +1,172 @@
+.practice-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 64px);
+}
+
+.practice-title {
+    text-align: center;
+    padding: 0.65rem 1rem;
+    background: linear-gradient(135deg, #16162b, #1a1a2e);
+    margin: 0;
+    border-bottom: 1px solid #2a2a4a;
+    font-size: 1.1rem;
+    color: #e0e0f0;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.practice-layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* ============ SIDEBAR ============ */
+.topics-sidebar {
+    width: 220px;
+    background: #16162b;
+    border-right: 1px solid #2a2a4a;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.topics-sidebar h2 {
+    margin: 0;
+    padding: 0.65rem 0.85rem;
+    border-bottom: 1px solid #2a2a4a;
+    background: #12122a;
+    font-size: 0.85rem;
+    color: #8888aa;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.topics-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.topics-sidebar li {
+    padding: 0.65rem 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-bottom: 1px solid #1e1e38;
+    border-left: 3px solid transparent;
+}
+
+.topics-sidebar li:hover {
+    background: #1e1e38;
+}
+
+.topics-sidebar li.active {
+    background: linear-gradient(90deg, #1a2744, #16162b);
+    border-left: 3px solid #3b82f6;
+}
+
+.topic-name {
+    font-weight: 600;
+    font-size: 0.88rem;
+    margin-bottom: 0.15rem;
+    color: #c0c0e0;
+}
+
+.topics-sidebar li.active .topic-name {
+    color: #60a5fa;
+}
+
+.topic-desc {
+    font-size: 0.72rem;
+    color: #5555aa;
+    line-height: 1.2;
+}
+
+.editor-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #1a1a2e;
+    min-width: 0;
+}
+
+/* ============ EDITOR HEADER ============ */
+.editor-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.85rem;
+    background: #16162b;
+    border-bottom: 1px solid #2a2a4a;
+}
+
+.editor-section-header h2 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #e0e0f0;
+}
+
+.editor-section-header p {
+    margin: 0;
+    font-size: 0.75rem;
+    color: #5555aa;
+}
+
+/* ============ SIDEBAR SCROLLBAR ============ */
+.topics-sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.topics-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.topics-sidebar::-webkit-scrollbar-thumb {
+    background: #2a2a4a;
+    border-radius: 2px;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+    .practice-layout {
+        flex-direction: column;
+    }
+
+    .topics-sidebar {
+        width: 100%;
+        max-height: 120px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        border-right: none;
+        border-bottom: 1px solid #2a2a4a;
+    }
+
+    .topics-sidebar h2 {
+        display: none;
+    }
+
+    .topics-sidebar ul {
+        display: flex;
+        white-space: nowrap;
+    }
+
+    .topics-sidebar li {
+        border-bottom: none;
+        border-left: none;
+        border-bottom: 3px solid transparent;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .topics-sidebar li.active {
+        border-left: none;
+        border-bottom: 3px solid #3b82f6;
+        background: #1e1e38;
+    }
+
+    .editor-section {
+        flex: 1;
+        min-height: 0;
+    }
+}

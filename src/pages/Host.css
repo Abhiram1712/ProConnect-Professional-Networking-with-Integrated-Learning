@@ -1,0 +1,95 @@
+/* ============================================
+   HOST PAGE — Create Opportunity
+   ============================================ */
+
+.host-page {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+    max-width: 800px;
+    margin: 0 auto;
+    animation: fadeIn 0.35s ease;
+}
+
+.host-page h1 {
+    letter-spacing: -0.02em;
+}
+
+.host-form {
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-light);
+}
+
+.host-form .form-group>label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.host-form .form-group input,
+.host-form .form-group select,
+.host-form .form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 0.25rem;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    color: var(--text);
+}
+
+.host-form .form-group input:focus,
+.host-form .form-group select:focus,
+.host-form .form-group textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+    outline: none;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.host-form .btn-primary {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.85rem;
+    font-size: 1rem;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .host-page {
+        padding: 1.5rem 1rem;
+    }
+
+    .host-form {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .host-page {
+        padding: 1rem 0.75rem;
+    }
+
+    .host-form {
+        padding: 1.25rem;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
