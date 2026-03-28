@@ -48,6 +48,16 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
+    profilePicture: {
+        type: String,
+        default: ''
+    },
+    certifications: [{
+        name: String,
+        issuer: String,
+        date: String,
+        url: String
+    }],
     connections: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -56,6 +66,14 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Post'
     }],
+    loginOtp: {
+        type: String,
+        default: null
+    },
+    loginOtpExpire: {
+        type: Date,
+        default: null
+    },
     createdAt: {
         type: Date,
         default: Date.now

@@ -12,6 +12,7 @@ const API = 'http://localhost:5000/api';
 
 const Network = () => {
     const navigate = useNavigate();
+    const token = localStorage.getItem('token');
     const [activeTab, setActiveTab] = useState('suggestions');
     const [suggestions, setSuggestions] = useState([]);
     const [receivedRequests, setReceivedRequests] = useState([]);
@@ -20,14 +21,25 @@ const Network = () => {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [sortBy, setSortBy] = useState('recent');
-    const [user] = useState(JSON.parse(localStorage.getItem('user')));
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+    useEffect(() => {
+        if (!token) return;
+        fetch('http://localhost:5000/api/auth', { headers: { 'x-auth-token': token } })
+            .then(res => res.json())
+            .then(data => {
+                if (data && data._id) {
+                    const updated = { ...JSON.parse(localStorage.getItem('user')), profilePicture: data.profilePicture };
+                    setUser(updated);
+                    localStorage.setItem('user', JSON.stringify(updated));
+                }
+            }).catch(()=>{});
+    }, [token]);
 
     // Connect modal
     const [connectModal, setConnectModal] = useState(null);
     const [connectNote, setConnectNote] = useState('');
     const [connectionType, setConnectionType] = useState('');
 
-    const token = localStorage.getItem('token');
 
     // Auth guard: redirect to login if not authenticated
     useEffect(() => {
@@ -278,7 +290,7 @@ const Network = () => {
                             </div>
                             {(activeTab === 'invitations' ? receivedRequests : receivedRequests.slice(0, 3)).map(request => (
                                 <div key={request._id} className="invitation-item">
-                                    <div className="invitation-avatar"><User size={24} /></div>
+                                    <div className="invitation-avatar" style={request.requester?.profilePicture ? { backgroundImage: `url(${request.requester.profilePicture})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}>{!request.requester?.profilePicture && <User size={24} />}</div>
                                     <div className="invitation-info">
                                         <h4>{request.requester?.username || 'Unknown'}</h4>
                                         <p className="headline">{request.requester?.headline || 'Professional'}</p>
@@ -320,7 +332,7 @@ const Network = () => {
                             ) : (
                                 sentRequests.map(request => (
                                     <div key={request._id} className="sent-item">
-                                        <div className="invitation-avatar"><User size={24} /></div>
+                                        <div className="invitation-avatar" style={request.recipient?.profilePicture ? { backgroundImage: `url(${request.recipient.profilePicture})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}>{!request.recipient?.profilePicture && <User size={24} />}</div>
                                         <div className="invitation-info">
                                             <h4>{request.recipient?.username || 'Unknown'}</h4>
                                             <p className="headline">{request.recipient?.headline || 'Professional'}</p>
@@ -385,7 +397,7 @@ const Network = () => {
                             ) : (
                                 connections.map(conn => (
                                     <div key={conn._id} className="connection-item">
-                                        <div className="connection-avatar"><User size={24} /></div>
+                                        <div className="connection-avatar" style={conn.profilePicture ? { backgroundImage: `url(${conn.profilePicture})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}>{!conn.profilePicture && <User size={24} />}</div>
                                         <div className="connection-info">
                                             <h4>{conn.username}</h4>
                                             <p className="conn-headline">{conn.headline || 'Professional'}</p>
@@ -445,7 +457,7 @@ const Network = () => {
                                     {suggestions.map(suggestion => (
                                         <div key={suggestion._id} className="user-card">
                                             <div className="user-cover">
-                                                <div className="user-card-avatar"><User size={28} /></div>
+                                                <div className="user-card-avatar" style={suggestion.profilePicture ? { backgroundImage: `url(${suggestion.profilePicture})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}>{!suggestion.profilePicture && <User size={28} />}</div>
                                             </div>
                                             <div className="user-info">
                                                 <h3>{suggestion.username}</h3>

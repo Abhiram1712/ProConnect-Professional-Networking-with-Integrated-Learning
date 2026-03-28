@@ -29,12 +29,26 @@ const VISIBILITY_OPTIONS = [
 
 const Feed = () => {
     const navigate = useNavigate();
+    const token = localStorage.getItem('token');
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [user] = useState(JSON.parse(localStorage.getItem('user')));
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+    useEffect(() => {
+        if (!token) return;
+        fetch('http://localhost:5000/api/auth', { headers: { 'x-auth-token': token } })
+            .then(res => res.json())
+            .then(data => {
+                if (data && data._id) {
+                    const updated = { ...JSON.parse(localStorage.getItem('user')), profilePicture: data.profilePicture };
+                    setUser(updated);
+                    localStorage.setItem('user', JSON.stringify(updated));
+                }
+            }).catch(()=>{});
+    }, [token]);
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [sortBy, setSortBy] = useState('recent');
     const [trending, setTrending] = useState([]);
+    const [suggestions, setSuggestions] = useState([]);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [activeFilter, setActiveFilter] = useState('all');
@@ -60,7 +74,6 @@ const Feed = () => {
     const [connectionCount, setConnectionCount] = useState(0);
     const [profileViews] = useState(Math.floor(Math.random() * 50) + 5);
 
-    const token = localStorage.getItem('token');
 
     // Auth guard: redirect to login if not authenticated
     useEffect(() => {
@@ -75,6 +88,7 @@ const Feed = () => {
         fetchPosts();
         fetchTrending();
         fetchConnectionCount();
+        fetchSuggestions();
     }, [sortBy, activeFilter, token]);
 
     const fetchPosts = async (pageNum = 1) => {
@@ -130,6 +144,34 @@ const Feed = () => {
             });
             const data = await res.json();
             if (Array.isArray(data)) setConnectionCount(data.length);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const fetchSuggestions = async () => {
+        try {
+            const res = await fetch(`${API}/connections/suggestions`, {
+                headers: { 'x-auth-token': token }
+            });
+            const data = await res.json();
+            if (Array.isArray(data)) setSuggestions(data);
+        } catch (err) {
+            console.error("Error fetching suggestions:", err);
+        }
+    };
+
+    const handleFollow = async (userId) => {
+        try {
+            const res = await fetch(`${API}/connections/follow/${userId}`, {
+                method: 'POST',
+                headers: { 'x-auth-token': token }
+            });
+            if (res.ok) {
+                const data = await res.json();
+                toast.success(data.following ? 'Following started!' : 'Unfollowed');
+                fetchSuggestions(); // refresh suggestions block to pull a new one in
+            }
         } catch (err) {
             console.error(err);
         }
@@ -389,7 +431,7 @@ const Feed = () => {
                     <div className="profile-mini">
                         <div className="profile-bg"></div>
                         <div className="profile-img-wrapper">
-                            <div className="profile-img-placeholder"><User size={38} /></div>
+                            {user?.profilePicture ? <img src={user.profilePicture} style={{width:'100%', height:'100%', borderRadius:'50%', objectFit:'cover'}}/> : <div className="profile-img-placeholder"><User size={38} /></div>}
                         </div>
                         <h3>{user?.username || 'Guest'}</h3>
                         <p className="headline-text">{user?.headline || 'Welcome to your professional feed'}</p>
@@ -414,7 +456,7 @@ const Feed = () => {
                     {/* Create Post */}
                     <div className="create-post card" style={{ boxShadow: 'none' }}>
                         <div className="input-row">
-                            <div className="user-icon"><User size={22} /></div>
+                            <div className="user-icon" style={user?.profilePicture ? { backgroundImage: `url(${user.profilePicture})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}>{!user?.profilePicture && <User size={22} />}</div>
                             <input
                                 type="text"
                                 placeholder="Start a post, try writing with #hashtags"
@@ -547,32 +589,27 @@ const Feed = () => {
                     {/* Add to feed */}
                     <div className="recommendations-section">
                         <h3>Add to your feed</h3>
-                        <ul className="recommendations-list">
-                            <li>
-                                <div className="rec-user-icon"><User size={18} /></div>
-                                <div className="rec-info">
-                                    <h4>Tech News</h4>
-                                    <p>Company • Technology</p>
-                                    <button className="follow-btn">+ Follow</button>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="rec-user-icon"><User size={18} /></div>
-                                <div className="rec-info">
-                                    <h4>Industry Insights</h4>
-                                    <p>Newsletter • 12K followers</p>
-                                    <button className="follow-btn">+ Follow</button>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="rec-user-icon"><User size={18} /></div>
-                                <div className="rec-info">
-                                    <h4>Career Tips</h4>
-                                    <p>Group • 5K members</p>
-                                    <button className="follow-btn">+ Follow</button>
-                                </div>
-                            </li>
-                        </ul>
+                        {suggestions.length === 0 ? (
+                            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>No new suggestions.</p>
+                        ) : (
+                            <ul className="recommendations-list">
+                                {suggestions.slice(0, 3).map(suggestion => (
+                                    <li key={suggestion._id}>
+                                        <div 
+                                            className="rec-user-icon" 
+                                            style={suggestion.profilePicture ? { backgroundImage: `url(${suggestion.profilePicture})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: 'transparent' } : {}}
+                                        >
+                                            {!suggestion.profilePicture && <User size={18} />}
+                                        </div>
+                                        <div className="rec-info">
+                                            <h4>{suggestion.username}</h4>
+                                            <p>{suggestion.headline || 'Member'}</p>
+                                            <button className="follow-btn" onClick={() => handleFollow(suggestion._id)}>+ Follow</button>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
                     </div>
                 </div>
             </div>
@@ -662,7 +699,7 @@ const PostCard = ({
             <div className="post-card-inner">
                 {/* Header */}
                 <div className="post-header">
-                    <div className="post-user-icon"><User size={22} /></div>
+                    <div className="post-user-icon" style={post.user?.profilePicture ? { backgroundImage: `url(${post.user.profilePicture})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}>{!post.user?.profilePicture && <User size={22} />}</div>
                     <div className="post-header-info">
                         <h4>
                             {post.user?.username || 'Unknown User'}
@@ -709,11 +746,22 @@ const PostCard = ({
                 </p>
             </div>
 
+            {/* Media Content */}
+            {post.media?.url && (
+                <div className="post-media-container" style={{ marginTop: '0.75rem', width: '100%', borderRadius: '8px', overflow: 'hidden', background: '#f3f2ef' }}>
+                    {post.media.type === 'video' ? (
+                        <video src={post.media.url} controls style={{ width: '100%', maxHeight: '500px', display: 'block' }} />
+                    ) : (
+                        <img src={post.media.url} alt="post media" style={{ width: '100%', maxHeight: '500px', objectFit: 'contain', display: 'block' }} />
+                    )}
+                </div>
+            )}
+
             {/* Original Post Embed (for reposts) */}
             {post.postType === 'repost' && post.originalPost && (
                 <div className="original-post-embed">
                     <div className="original-header">
-                        <div className="original-avatar"><User size={14} /></div>
+                        <div className="original-avatar" style={post.originalPost.user?.profilePicture ? { backgroundImage: `url(${post.originalPost.user.profilePicture})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}>{!post.originalPost.user?.profilePicture && <User size={14} />}</div>
                         <div>
                             <strong style={{ fontSize: '0.85rem' }}>{post.originalPost.user?.username}</strong>
                             <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', margin: 0 }}>
@@ -818,7 +866,7 @@ const PostCard = ({
                 <div className="comments-section">
                     {/* Comment Input */}
                     <div className="comment-input-row">
-                        <div className="mini-avatar"><User size={14} /></div>
+                        <div className="mini-avatar" style={user?.profilePicture ? { backgroundImage: `url(${user.profilePicture})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}>{!user?.profilePicture && <User size={14} />}</div>
                         <div className="comment-input-wrap">
                             <input
                                 type="text"
@@ -837,7 +885,7 @@ const PostCard = ({
                     {visibleComments.map((comment, idx) => (
                         <div key={comment._id || idx} className="comment-thread">
                             <div className="comment-item">
-                                <div className="comment-avatar"><User size={12} /></div>
+                                <div className="comment-avatar" style={comment.user?.profilePicture ? { backgroundImage: `url(${comment.user.profilePicture})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}>{!comment.user?.profilePicture && <User size={12} />}</div>
                                 <div className="comment-body">
                                     <div className="comment-bubble">
                                         <div className="comment-author">
@@ -869,7 +917,7 @@ const PostCard = ({
                                         <div className="replies-container">
                                             {comment.replies.map((reply, rIdx) => (
                                                 <div key={reply._id || rIdx} className="comment-item" style={{ marginBottom: '0.4rem' }}>
-                                                    <div className="comment-avatar" style={{ width: 24, height: 24 }}><User size={10} /></div>
+                                                    <div className="comment-avatar" style={{ width: 24, height: 24, ...(reply.user?.profilePicture ? { backgroundImage: `url(${reply.user.profilePicture})`, backgroundSize: "cover", backgroundPosition: "center" } : {}) }}>{!reply.user?.profilePicture && <User size={10} />}</div>
                                                     <div className="comment-body">
                                                         <div className="comment-bubble" style={{ background: '#eef3f8' }}>
                                                             <div className="comment-author">
@@ -974,6 +1022,26 @@ const CreatePostModal = ({ user, token, onClose, onPostCreated }) => {
     const [postType, setPostType] = useState('text');
     const [visibility, setVisibility] = useState('public');
     const [submitting, setSubmitting] = useState(false);
+    const [mediaFile, setMediaFile] = useState(null);
+    const fileInputRef = useRef(null);
+
+    const handleMediaUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+             if (file.size > 10 * 1024 * 1024) {
+                 toast.error('File too large (Max 10MB).');
+                 return;
+             }
+             const reader = new FileReader();
+             reader.onloadend = () => {
+                 setMediaFile(reader.result);
+                 if (postType !== 'image' && postType !== 'video') {
+                     setPostType(file.type.startsWith('video') ? 'video' : 'image');
+                 }
+             };
+             reader.readAsDataURL(file);
+        }
+    };
 
     // Poll state
     const [pollQuestion, setPollQuestion] = useState('');
@@ -981,7 +1049,7 @@ const CreatePostModal = ({ user, token, onClose, onPostCreated }) => {
     const [pollDuration, setPollDuration] = useState(7);
 
     const handleSubmit = async () => {
-        if (!content.trim() && postType !== 'poll') return;
+        if (!content.trim() && postType !== 'poll' && !mediaFile) return;
         if (postType === 'poll' && pollOptions.filter(o => o.trim()).length < 2) {
             toast.error('Please add at least 2 poll options');
             return;
@@ -992,7 +1060,8 @@ const CreatePostModal = ({ user, token, onClose, onPostCreated }) => {
             const body = {
                 content,
                 postType,
-                visibility
+                visibility,
+                mediaBase64: mediaFile
             };
 
             if (postType === 'poll') {
@@ -1032,7 +1101,7 @@ const CreatePostModal = ({ user, token, onClose, onPostCreated }) => {
                 </div>
                 <div className="modal-body">
                     <div className="modal-user-row">
-                        <div className="user-icon" style={{ width: 44, height: 44 }}><User size={20} /></div>
+                        <div className="user-icon" style={{ width: 44, height: 44, ...(user?.profilePicture ? { backgroundImage: `url(${user.profilePicture})`, backgroundSize: "cover", backgroundPosition: "center" } : {}) }}>{!user?.profilePicture && <User size={20} />}</div>
                         <div>
                             <strong>{user?.username}</strong>
                             <select className="visibility-select" value={visibility} onChange={e => setVisibility(e.target.value)}>
@@ -1069,6 +1138,26 @@ const CreatePostModal = ({ user, token, onClose, onPostCreated }) => {
                         rows={6}
                         autoFocus
                     />
+
+                    {(postType === 'image' || postType === 'video' || mediaFile) && (
+                        <div className="media-upload-section" style={{ marginTop: '1rem', textAlign: 'center' }}>
+                            <input type="file" ref={fileInputRef} onChange={handleMediaUpload} accept="image/*,video/*" style={{ display: 'none' }} />
+                            {!mediaFile ? (
+                                <button className="btn btn-outline" onClick={() => fileInputRef.current?.click()} style={{ borderRadius: '20px' }}>Upload Media</button>
+                            ) : (
+                                <div style={{ position: 'relative', marginTop: '1rem', display: 'inline-block', width: '100%' }}>
+                                    {mediaFile.startsWith('data:video') ? (
+                                        <video src={mediaFile} controls style={{ width: '100%', borderRadius: '8px', maxHeight: '300px', backgroundColor: '#000' }} />
+                                    ) : (
+                                        <img src={mediaFile} alt="preview" style={{ width: '100%', borderRadius: '8px', maxHeight: '300px', objectFit: 'contain', backgroundColor: '#f3f2ef' }} />
+                                    )}
+                                    <button onClick={() => setMediaFile(null)} style={{ position: 'absolute', top: 10, right: 10, background: 'rgba(0,0,0,0.6)', color: 'white', border: 'none', borderRadius: '50%', padding: '5px', cursor: 'pointer' }}>
+                                        <X size={16} />
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
 
                     {/* Poll Options */}
                     {postType === 'poll' && (
@@ -1109,7 +1198,7 @@ const CreatePostModal = ({ user, token, onClose, onPostCreated }) => {
                     <button
                         className="btn btn-primary post-btn"
                         onClick={handleSubmit}
-                        disabled={submitting || (!content.trim() && postType !== 'poll')}
+                        disabled={submitting || (!content.trim() && postType !== 'poll' && !mediaFile)}
                     >
                         {submitting ? 'Posting...' : 'Post'}
                     </button>

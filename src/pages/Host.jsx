@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Briefcase, Trophy, Code, Plus, DollarSign, Calendar } from 'lucide-react';
 import { toast } from 'react-toastify';
@@ -15,6 +15,14 @@ const Host = () => {
         reward: ''
     });
     const [loading, setLoading] = useState(false);
+    const token = localStorage.getItem('token');
+
+    // Auth guard
+    useEffect(() => {
+        if (!token) {
+            navigate('/login');
+        }
+    }, [token, navigate]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,7 +36,8 @@ const Host = () => {
             const res = await fetch('http://localhost:5000/api/opportunities', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'x-auth-token': token
                 },
                 body: JSON.stringify(formData)
             });

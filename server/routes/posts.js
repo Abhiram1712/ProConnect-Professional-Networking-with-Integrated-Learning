@@ -4,6 +4,15 @@ const auth = require('../middleware/auth');
 const Post = require('../models/Post');
 const User = require('../models/User');
 const Notification = require('../models/Notification');
+const cloudinary = require('cloudinary').v2;
+
+if (process.env.CLOUDINARY_CLOUD_NAME) {
+    cloudinary.config({
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET
+    });
+}
 
 // Helper: extract hashtags from content
 function extractHashtags(content) {
@@ -31,9 +40,27 @@ function extractMentions(content) {
 router.post('/', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
-        const { content, postType, media, article, poll, visibility } = req.body;
+        const { content, postType, media, article, poll, visibility, mediaBase64 } = req.body;
 
         const hashtags = extractHashtags(content || '');
+        
+        let mediaData = media || {};
+        
+        if (mediaBase64 && process.env.CLOUDINARY_CLOUD_NAME) {
+             try {
+                 const uploadResponse = await cloudinary.uploader.upload(mediaBase64, {
+                     resource_type: 'auto',
+                     folder: 'unstop_clone_feed'
+                 });
+                 mediaData = {
+                     url: uploadResponse.secure_url,
+                     type: uploadResponse.resource_type === 'video' ? 'video' : 'image'
+                 };
+             } catch (err) {
+                 console.error("Cloudinary Upload Error:", err);
+                 // Gracefully fallback to no media if failed
+             }
+        }
 
         // Resolve @mentions to user IDs
         const mentionNames = extractMentions(content || '');
@@ -49,7 +76,7 @@ router.post('/', auth, async (req, res) => {
             content: content || '',
             user: req.user.id,
             postType: postType || 'text',
-            media: media || {},
+            media: mediaData,
             article: article || {},
             poll: poll || {},
             visibility: visibility || 'public',

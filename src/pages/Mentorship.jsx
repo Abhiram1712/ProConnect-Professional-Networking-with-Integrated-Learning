@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Calendar, Star, CheckCircle } from 'lucide-react';
 import { toast } from 'react-toastify';
 import './ContentPages.css';
@@ -13,8 +14,21 @@ const MENTORS = [
 const Mentorship = () => {
     const [bookedMentors, setBookedMentors] = useState([]);
     const [selectedMentor, setSelectedMentor] = useState(null);
+    const navigate = useNavigate();
+    const token = localStorage.getItem('token');
+
+    // Auth guard
+    useEffect(() => {
+        if (!token) {
+            navigate('/login');
+        }
+    }, [token, navigate]);
 
     const handleBookSession = (mentor) => {
+        if (!token) {
+            navigate('/login');
+            return;
+        }
         if (bookedMentors.includes(mentor.id)) {
             toast.info(`You already have a pending session with ${mentor.name}.`);
             return;

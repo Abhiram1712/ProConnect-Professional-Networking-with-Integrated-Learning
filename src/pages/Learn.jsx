@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookOpen, Video, Award, Play, Clock, Layers } from 'lucide-react';
 import { toast } from 'react-toastify';
@@ -16,8 +16,20 @@ const COURSE_DATA = [
 const Learn = () => {
     const navigate = useNavigate();
     const [enrolledCourses, setEnrolledCourses] = useState([]);
+    const token = localStorage.getItem('token');
+
+    // Auth guard
+    useEffect(() => {
+        if (!token) {
+            navigate('/login');
+        }
+    }, [token, navigate]);
 
     const handleStartLearning = (course) => {
+        if (!token) {
+            navigate('/login');
+            return;
+        }
         if (enrolledCourses.includes(course.id)) {
             toast.info(`Resuming "${course.title}" — redirecting to Practice...`);
             navigate(course.link);

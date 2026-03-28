@@ -16,7 +16,7 @@ router.get('/me', auth, async (req, res) => {
 
 // Update user profile
 router.post('/me', auth, async (req, res) => {
-    const { username, headline, bio, skills, education } = req.body;
+    const { username, headline, bio, skills, education, profilePicture, certifications } = req.body;
 
     // Build profile object
     const profileFields = {};
@@ -24,6 +24,8 @@ router.post('/me', auth, async (req, res) => {
     if (headline !== undefined) profileFields.headline = headline;
     if (bio !== undefined) profileFields.bio = bio;
     if (education !== undefined) profileFields.education = education;
+    if (profilePicture !== undefined) profileFields.profilePicture = profilePicture;
+    if (certifications !== undefined) profileFields.certifications = certifications;
     if (skills !== undefined) {
         if (Array.isArray(skills)) {
             profileFields.skills = skills;

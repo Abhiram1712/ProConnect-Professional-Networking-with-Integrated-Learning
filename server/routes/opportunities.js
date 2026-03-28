@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Opportunity = require('../models/Opportunity');
+const auth = require('../middleware/auth');
 
 // Get all opportunities
 router.get('/', async (req, res) => {
@@ -13,8 +14,9 @@ router.get('/', async (req, res) => {
 });
 
 // Create a new opportunity
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const opportunity = new Opportunity({
+        user: req.user.id,
         title: req.body.title,
         company: req.body.company,
         type: req.body.type,

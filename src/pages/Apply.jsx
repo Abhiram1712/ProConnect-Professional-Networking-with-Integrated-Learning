@@ -18,6 +18,12 @@ const Apply = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
         const fetchDetails = async () => {
             try {
                 // Fetch opportunity
@@ -36,7 +42,7 @@ const Apply = () => {
         };
 
         if (id) fetchDetails();
-    }, [id]);
+    }, [id, navigate]);
 
     const handleApply = async (e) => {
         e.preventDefault();

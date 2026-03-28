@@ -165,3 +165,118 @@
         height: 90px;
     }
 }
+
+/* ========== PROFILE PICTURE UPLOAD ========== */
+.profile-picture-upload {
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+}
+
+.profile-picture-upload .avatar-placeholder {
+    transition: all 0.2s ease;
+    background-size: cover !important;
+    background-position: center !important;
+    overflow: hidden;
+    position: relative;
+}
+
+.upload-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    border-radius: 50%;
+}
+
+.profile-picture-upload:hover .upload-overlay {
+    opacity: 1;
+}
+
+.profile-picture-upload input[type="file"] {
+    display: none;
+}
+
+/* ========== CERTIFICATIONS ========== */
+.certifications-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-light);
+}
+
+.certifications-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.certifications-header h3 {
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text);
+    margin: 0;
+}
+
+.certification-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border-light);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+    position: relative;
+}
+
+.certification-card .remove-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s ease;
+    padding: 0;
+}
+
+.certification-card .remove-btn:hover {
+    color: var(--error);
+}
+
+.certification-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.add-cert-btn {
+    background: transparent;
+    border: 1.5px dashed var(--border);
+    color: var(--primary);
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.add-cert-btn:hover {
+    background: var(--primary-bg);
+    border-color: var(--primary);
+}
