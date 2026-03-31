@@ -4,6 +4,8 @@ import Hero from '../components/Hero';
 import { Calendar, Briefcase, Award, Code, Monitor, ArrowRight, Zap, Users, BookOpen, Trophy } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+const API = import.meta.env.VITE_API_URL;
+
 const FEATURES = [
   { icon: BookOpen, emoji: '📚', title: 'Learn', desc: 'Expand your knowledge with structured courses and expert articles.', path: '/learn', color: '#6366f1' },
   { icon: Code, emoji: '💻', title: 'Practice', desc: 'Sharpen your coding skills with a built-in multi-language editor.', path: '/practice', color: '#8b5cf6' },
@@ -19,7 +21,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/opportunities')
+    fetch(`${API}/opportunities`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) setOpportunities(data.slice(0, 6));

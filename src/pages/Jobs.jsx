@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom';
 import { Briefcase, MapPin, DollarSign, Clock } from 'lucide-react';
 import './Compete.css';
 
+const API = import.meta.env.VITE_API_URL;
+
 const Jobs = () => {
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('All');
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/opportunities')
+        fetch(`${API}/opportunities`)
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data)) {

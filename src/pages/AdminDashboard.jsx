@@ -8,7 +8,7 @@ import {
 import { toast } from 'react-toastify';
 import './Dashboard.css';
 
-const API = 'http://localhost:5000/api';
+const API = import.meta.env.VITE_API_URL;
 
 const AdminDashboard = () => {
     const navigate = useNavigate();

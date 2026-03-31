@@ -4,6 +4,8 @@ import { Briefcase, MapPin, DollarSign, Clock, CheckCircle } from 'lucide-react'
 import { toast } from 'react-toastify';
 import './Apply.css';
 
+const API = import.meta.env.VITE_API_URL;
+
 const Apply = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -27,7 +29,7 @@ const Apply = () => {
         const fetchDetails = async () => {
             try {
                 // Fetch opportunity
-                const oppRes = await fetch(`http://localhost:5000/api/opportunities`);
+                const oppRes = await fetch(`${API}/opportunities`);
                 const opps = await oppRes.json();
                 const opp = opps.find(o => o._id === id);
 
@@ -56,7 +58,7 @@ const Apply = () => {
                 return;
             }
 
-            const res = await fetch(`http://localhost:5000/api/applications/apply/${id}`, {
+            const res = await fetch(`${API}/applications/apply/${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

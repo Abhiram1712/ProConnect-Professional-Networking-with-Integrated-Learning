@@ -10,7 +10,7 @@ import {
 import { toast } from 'react-toastify';
 import './Feed.css';
 
-const API = 'http://localhost:5000/api';
+const API = import.meta.env.VITE_API_URL;
 
 const REACTIONS = [
     { type: 'like', emoji: '👍', label: 'Like', color: '#378fe9' },
@@ -35,7 +35,7 @@ const Feed = () => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     useEffect(() => {
         if (!token) return;
-        fetch('http://localhost:5000/api/auth', { headers: { 'x-auth-token': token } })
+        fetch(`${API}/auth`, { headers: { 'x-auth-token': token } })
             .then(res => res.json())
             .then(data => {
                 if (data && data._id) {

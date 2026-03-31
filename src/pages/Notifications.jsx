@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 
-const API = 'http://localhost:5000/api';
+const API = import.meta.env.VITE_API_URL;
 
 const NOTIFICATION_ICONS = {
     connection_request: { icon: UserPlus, color: '#378fe9' },

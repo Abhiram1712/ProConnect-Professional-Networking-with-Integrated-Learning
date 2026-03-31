@@ -8,7 +8,7 @@ import {
 import { toast } from 'react-toastify';
 import './Network.css';
 
-const API = 'http://localhost:5000/api';
+const API = import.meta.env.VITE_API_URL;
 
 const Network = () => {
     const navigate = useNavigate();
@@ -25,7 +25,7 @@ const Network = () => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     useEffect(() => {
         if (!token) return;
-        fetch('http://localhost:5000/api/auth', { headers: { 'x-auth-token': token } })
+        fetch(`${API}/auth`, { headers: { 'x-auth-token': token } })
             .then(res => res.json())
             .then(data => {
                 if (data && data._id) {

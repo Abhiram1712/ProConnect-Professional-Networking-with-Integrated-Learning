@@ -4,6 +4,8 @@ import { Briefcase, Trophy, Code, Plus, DollarSign, Calendar } from 'lucide-reac
 import { toast } from 'react-toastify';
 import './Host.css';
 
+const API = import.meta.env.VITE_API_URL;
+
 const Host = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -33,7 +35,7 @@ const Host = () => {
         setLoading(true);
 
         try {
-            const res = await fetch('http://localhost:5000/api/opportunities', {
+            const res = await fetch(`${API}/opportunities`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -4,7 +4,7 @@ import { Calendar, Star, CheckCircle } from 'lucide-react';
 import { toast } from 'react-toastify';
 import './ContentPages.css';
 
-const API = 'http://localhost:5000/api';
+const API = import.meta.env.VITE_API_URL;
 
 const MENTORS_FALLBACK = [
     { id: 1, name: 'Alice Chen', role: 'Staff Engineer', company: 'Google', initials: 'AC', skills: ['System Design', 'Go', 'Kubernetes'], rating: 4.9, sessions: 120, rate: '$50/hr' },

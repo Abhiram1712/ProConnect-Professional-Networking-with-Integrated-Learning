@@ -3,6 +3,8 @@ import { User, Mail, Book, Code, Save, Camera, Award, Plus, Trash2, Briefcase, G
 import { toast } from 'react-toastify';
 import './Profile.css';
 
+const API = import.meta.env.VITE_API_URL;
+
 const Profile = () => {
     const fileInputRef = useRef(null);
     const [formData, setFormData] = useState({
@@ -18,7 +20,7 @@ const Profile = () => {
             const token = localStorage.getItem('token');
             if (!token) { setLoading(false); return; }
             try {
-                const res = await fetch('http://localhost:5000/api/profile/me', {
+                const res = await fetch(`${API}/profile/me`, {
                     headers: { 'x-auth-token': token }
                 });
                 const data = await res.json();
@@ -73,7 +75,7 @@ const Profile = () => {
         setSaving(true);
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch('http://localhost:5000/api/profile/me', {
+            const res = await fetch(`${API}/profile/me`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
                 body: JSON.stringify({

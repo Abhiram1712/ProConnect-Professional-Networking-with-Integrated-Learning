@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import { Rocket, User, Mail, Lock, ArrowRight, Eye, EyeOff, CheckCircle } from 'lucide-react';
 import './Auth.css';
 
+const API = import.meta.env.VITE_API_URL;
+
 const ROLES = [
     { value: 'candidate', icon: '🎓', label: 'Candidate', desc: 'Find jobs & grow your career', color: '#6366f1' },
     { value: 'mentor', icon: '🧑‍🏫', label: 'Mentor', desc: 'Guide & inspire others', color: '#10b981' },
@@ -30,7 +32,7 @@ const Register = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await fetch('http://localhost:5000/api/auth/register', {
+            const res = await fetch(`${API}/auth/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)

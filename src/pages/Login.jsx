@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import { Rocket, ArrowRight, KeyRound } from 'lucide-react';
 import './Auth.css';
 
+const API = import.meta.env.VITE_API_URL;
+
 const Login = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [showOTP, setShowOTP] = useState(false);
@@ -30,7 +32,7 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await fetch('http://localhost:5000/api/auth/login', {
+            const res = await fetch(`${API}/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -54,7 +56,7 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await fetch('http://localhost:5000/api/auth/verify-login', {
+            const res = await fetch(`${API}/auth/verify-login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: formData.email, code: otpCode })

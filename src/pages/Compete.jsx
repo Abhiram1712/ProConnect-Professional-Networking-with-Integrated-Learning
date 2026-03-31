@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Calendar, Briefcase, Award, Code, Monitor, Filter } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+const API = import.meta.env.VITE_API_URL;
+
 const Compete = () => {
     const [opportunities, setOpportunities] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -11,7 +13,7 @@ const Compete = () => {
     useEffect(() => {
         // Fetch all opportunities (in a real app, you might only fetch 'Competition' or 'Hackathon' types, 
         // or filter on the client side if the dataset is small).
-        fetch('http://localhost:5000/api/opportunities')
+        fetch(`${API}/opportunities`)
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data)) {
