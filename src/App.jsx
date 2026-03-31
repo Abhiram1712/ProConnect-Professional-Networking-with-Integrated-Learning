@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState, useEffect, createContext, useContext } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Compete from './pages/Compete';
 import Home from './pages/Home';
-
 import Learn from './pages/Learn';
 import Practice from './pages/Practice';
 import Mentorship from './pages/Mentorship';
@@ -23,49 +23,72 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 
+// Theme context
+export const ThemeContext = createContext({ theme: 'light', toggleTheme: () => {} });
+export const useTheme = () => useContext(ThemeContext);
+
 function App() {
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('proconnect-theme') || 'light';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('proconnect-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => setTheme(t => t === 'light' ? 'dark' : 'light');
+
   return (
-    <Router>
-      <div className="app-container">
-        <Header />
-        <ToastContainer
-          position="top-right"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
-        <main className="main-content" style={{ minHeight: '64px', paddingTop: '64px' }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/learn" element={<Learn />} />
-            <Route path="/practice" element={<Practice />} />
-            <Route path="/mentorship" element={<Mentorship />} />
-            <Route path="/compete" element={<Compete />} />
-            <Route path="/jobs" element={<Jobs />} />
-            <Route path="/host" element={<Host />} />
-            <Route path="/notifications" element={<Notifications />} />
-            <Route path="/blogs" element={<Blogs />} />
-            <Route path="/feed" element={<Feed />} />
-            <Route path="/network" element={<Network />} />
-            <Route path="/recruiter/dashboard" element={<RecruiterDashboard />} />
-            <Route path="/mentor/dashboard" element={<MentorDashboard />} />
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            <Route path="/apply/:id" element={<Apply />} />
-            <Route path="*" element={<div className="container" style={{ padding: '5rem 1rem', textAlign: 'center' }}><h2>404 - Not Found</h2><p>The page you are looking for does not exist.</p></div>} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <Router>
+        <div className="app-container">
+          <Header />
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            draggable
+            pauseOnHover
+            theme={theme === 'dark' ? 'dark' : 'colored'}
+            toastStyle={{ borderRadius: '12px', fontFamily: 'Plus Jakarta Sans, Inter, sans-serif' }}
+          />
+          <main className="main-content" style={{ minHeight: '64px', paddingTop: 'var(--header-height)' }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/learn" element={<Learn />} />
+              <Route path="/practice" element={<Practice />} />
+              <Route path="/mentorship" element={<Mentorship />} />
+              <Route path="/compete" element={<Compete />} />
+              <Route path="/jobs" element={<Jobs />} />
+              <Route path="/host" element={<Host />} />
+              <Route path="/notifications" element={<Notifications />} />
+              <Route path="/blogs" element={<Blogs />} />
+              <Route path="/feed" element={<Feed />} />
+              <Route path="/network" element={<Network />} />
+              <Route path="/recruiter/dashboard" element={<RecruiterDashboard />} />
+              <Route path="/mentor/dashboard" element={<MentorDashboard />} />
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route path="/apply/:id" element={<Apply />} />
+              <Route path="*" element={
+                <div className="container" style={{ padding: '8rem 1rem', textAlign: 'center' }}>
+                  <div style={{ fontSize: '5rem', marginBottom: '1rem' }}>🌌</div>
+                  <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>404 — Page Not Found</h2>
+                  <p style={{ color: 'var(--text-muted)' }}>The page you're looking for doesn't exist.</p>
+                  <a href="/" className="btn btn-primary" style={{ marginTop: '2rem', display: 'inline-flex' }}>Go Home</a>
+                </div>
+              } />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </ThemeContext.Provider>
   );
 }
 

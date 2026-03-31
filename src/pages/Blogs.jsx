@@ -123,21 +123,21 @@ const Blogs = () => {
             </div>
 
             {showForm && (
-                <form onSubmit={handleAddBlog} style={{ marginBottom: '2rem', background: '#f9fafb', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border)' }}>
-                    <h3 style={{ marginBottom: '1rem' }}>Create a New Blog</h3>
+                <form onSubmit={handleAddBlog} style={{ marginBottom: '2rem', background: 'var(--surface)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--border)' }}>
+                    <h3 style={{ marginBottom: '1rem', color: 'var(--text)' }}>Create a New Blog</h3>
                     <input 
                         type="text" 
                         placeholder="Blog Title" 
                         value={newTitle} 
                         onChange={e => setNewTitle(e.target.value)} 
-                        style={{ width: '100%', padding: '0.75rem', marginBottom: '1rem', borderRadius: '4px', border: '1px solid #ccc' }} 
+                        style={{ width: '100%', padding: '0.75rem', marginBottom: '1rem', borderRadius: '8px', border: '1.5px solid var(--border)', background: 'var(--surface-2)', color: 'var(--text)', fontFamily: 'inherit', fontSize: '0.95rem' }} 
                         required 
                     />
                     <textarea 
                         placeholder="Write your blog content here..." 
                         value={newContent} 
                         onChange={e => setNewContent(e.target.value)} 
-                        style={{ width: '100%', padding: '0.75rem', marginBottom: '1rem', borderRadius: '4px', border: '1px solid #ccc', minHeight: '150px' }} 
+                        style={{ width: '100%', padding: '0.75rem', marginBottom: '1rem', borderRadius: '8px', border: '1.5px solid var(--border)', background: 'var(--surface-2)', color: 'var(--text)', minHeight: '150px', fontFamily: 'inherit', fontSize: '0.9rem', resize: 'vertical' }} 
                         required 
                     />
                     <button type="submit" className="btn btn-primary" style={{ borderRadius: '20px' }}>Publish Blog</button>
@@ -149,8 +149,8 @@ const Blogs = () => {
                     <div key={blog.id} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                <div style={{ background: '#f0f4ff', padding: '1rem', borderRadius: '8px', color: 'var(--primary)' }}>
-                                    <Newspaper size={24} />
+                                <div style={{ background: 'var(--primary-bg)', padding: '0.85rem', borderRadius: '10px', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <Newspaper size={22} />
                                 </div>
                                 <div>
                                     <h3 style={{ fontSize: '1.2rem', marginBottom: '0.2rem' }}>{blog.title}</h3>
@@ -166,8 +166,9 @@ const Blogs = () => {
                         {expandedBlog === blog.id ? (
                             <>
                                 <div style={{
-                                    whiteSpace: 'pre-line', color: 'var(--text)', lineHeight: 1.7,
-                                    fontSize: '0.95rem', padding: '1rem', background: '#f9fafb', borderRadius: '8px'
+                                    whiteSpace: 'pre-line', color: 'var(--text-secondary)', lineHeight: 1.7,
+                                    fontSize: '0.95rem', padding: '1.25rem', background: 'var(--surface-2)', borderRadius: '10px',
+                                    border: '1px solid var(--border-light)'
                                 }}>
                                     {blog.content}
                                 </div>

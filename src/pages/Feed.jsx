@@ -454,7 +454,8 @@ const Feed = () => {
                 {/* ====== MAIN FEED ====== */}
                 <div className="main-feed">
                     {/* Create Post */}
-                    <div className="create-post card" style={{ boxShadow: 'none' }}>
+                    <div className="create-post" style={{ boxShadow: 'none' }}>
+
                         <div className="input-row">
                             <div className="user-icon" style={user?.profilePicture ? { backgroundImage: `url(${user.profilePicture})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}>{!user?.profilePicture && <User size={22} />}</div>
                             <input
@@ -464,22 +465,21 @@ const Feed = () => {
                                 readOnly
                             />
                         </div>
-                        <div className="action-row">
-                            <div className="media-actions">
-                                <button className="icon-btn media-btn" onClick={() => setShowCreateModal(true)}>
-                                    <ImageIcon size={18} /> Media
-                                </button>
-                                <button className="icon-btn event-btn" onClick={() => setShowCreateModal(true)}>
-                                    <Award size={18} /> Celebrate
-                                </button>
-                                <button className="icon-btn poll-btn" onClick={() => setShowCreateModal(true)}>
-                                    <BarChart3 size={18} /> Poll
-                                </button>
-                                <button className="icon-btn article-btn" onClick={() => setShowCreateModal(true)}>
-                                    <FileText size={18} /> Article
-                                </button>
-                            </div>
+                        <div style={{ display: 'flex', alignItems: 'center', paddingTop: '0.65rem', marginTop: '0.5rem', borderTop: '1px solid var(--border-light)', flexWrap: 'wrap', gap: '0.4rem' }}>
+                            <button onClick={() => setShowCreateModal(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.85rem', borderRadius: '999px', border: '1.5px solid transparent', background: 'none', color: '#378fe9', fontSize: '0.82rem', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'inherit', transition: 'all 0.15s' }} onMouseEnter={e => e.currentTarget.style.background='rgba(55,143,233,0.08)'} onMouseLeave={e => e.currentTarget.style.background='none'}>
+                                <ImageIcon size={17} /> Media
+                            </button>
+                            <button onClick={() => setShowCreateModal(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.85rem', borderRadius: '999px', border: '1.5px solid transparent', background: 'none', color: '#c37d16', fontSize: '0.82rem', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'inherit', transition: 'all 0.15s' }} onMouseEnter={e => e.currentTarget.style.background='rgba(195,125,22,0.08)'} onMouseLeave={e => e.currentTarget.style.background='none'}>
+                                <Award size={17} /> Celebrate
+                            </button>
+                            <button onClick={() => setShowCreateModal(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.85rem', borderRadius: '999px', border: '1.5px solid transparent', background: 'none', color: '#8b5cf6', fontSize: '0.82rem', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'inherit', transition: 'all 0.15s' }} onMouseEnter={e => e.currentTarget.style.background='rgba(139,92,246,0.08)'} onMouseLeave={e => e.currentTarget.style.background='none'}>
+                                <BarChart3 size={17} /> Poll
+                            </button>
+                            <button onClick={() => setShowCreateModal(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.85rem', borderRadius: '999px', border: '1.5px solid transparent', background: 'none', color: '#e06847', fontSize: '0.82rem', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'inherit', transition: 'all 0.15s' }} onMouseEnter={e => e.currentTarget.style.background='rgba(224,104,71,0.08)'} onMouseLeave={e => e.currentTarget.style.background='none'}>
+                                <FileText size={17} /> Article
+                            </button>
                         </div>
+
                     </div>
 
                     {/* Sort Bar */}

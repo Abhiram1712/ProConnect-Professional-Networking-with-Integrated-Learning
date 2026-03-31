@@ -53,18 +53,18 @@
     padding: 0.75rem 1rem;
     cursor: pointer;
     transition: background 0.15s;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid var(--border-light);
     font-size: 0.9rem;
     color: var(--text);
     text-decoration: none;
 }
 
 .sidebar-nav-item:hover {
-    background: #f3f6f8;
+    background: var(--surface-hover);
 }
 
 .sidebar-nav-item.active {
-    background: #e8f0fe;
+    background: var(--primary-bg);
     color: var(--primary);
     font-weight: 600;
 }
@@ -132,7 +132,7 @@
     align-items: center;
     gap: 0.85rem;
     padding: 0.85rem 1.25rem;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid var(--border-light);
     transition: background 0.15s;
 }
 
@@ -141,14 +141,14 @@
 }
 
 .invitation-item:hover {
-    background: #fafbfc;
+    background: var(--surface-hover);
 }
 
 .invitation-avatar {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #e8f0fe, #dbeafe);
+    background: var(--primary-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -187,7 +187,7 @@
 .invitation-info .request-note {
     font-size: 0.8rem;
     color: var(--text);
-    background: #f8fafc;
+    background: var(--surface-2);
     padding: 0.35rem 0.6rem;
     border-radius: 6px;
     margin-top: 0.35rem;
@@ -220,7 +220,7 @@
 }
 
 .ignore-btn:hover {
-    background: #f3f6f8;
+    background: var(--surface-hover);
     border-color: var(--text);
     color: var(--text);
 }
@@ -257,7 +257,7 @@
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem 1.25rem;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid var(--border-light);
 }
 
 .sent-item:last-child {
@@ -342,7 +342,7 @@
     align-items: center;
     gap: 0.85rem;
     padding: 0.85rem 1.25rem;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid var(--border-light);
     transition: background 0.15s;
 }
 
@@ -351,14 +351,14 @@
 }
 
 .connection-item:hover {
-    background: #fafbfc;
+    background: var(--surface-hover);
 }
 
 .connection-avatar {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #e8f0fe, #dbeafe);
+    background: var(--primary-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -397,7 +397,7 @@
     font-size: 0.7rem;
     padding: 0.15rem 0.5rem;
     border-radius: 10px;
-    background: #e8f0fe;
+    background: var(--primary-bg);
     color: var(--primary);
     font-weight: 500;
 }
@@ -438,8 +438,8 @@
 }
 
 .remove-conn-btn:hover {
-    background: #fee2e2;
-    color: #dc2626;
+    background: var(--error-bg);
+    color: var(--error);
 }
 
 /* ============ SUGGESTIONS GRID ============ */
@@ -486,7 +486,7 @@
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #e8f0fe, #dbeafe);
+    background: var(--primary-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -494,8 +494,8 @@
     bottom: -32px;
     left: 50%;
     transform: translateX(-50%);
-    border: 3px solid white;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border: 3px solid var(--surface);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     color: var(--primary);
 }
 
@@ -586,11 +586,12 @@
 }
 
 .connect-modal {
-    background: white;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
     width: 95%;
     max-width: 480px;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-lg);
     animation: modalSlideIn 0.25s ease;
     overflow: hidden;
 }
@@ -650,6 +651,8 @@
     resize: vertical;
     min-height: 80px;
     transition: border-color 0.15s;
+    background: var(--surface-2);
+    color: var(--text);
 }
 
 .connect-modal textarea:focus {
@@ -757,7 +760,7 @@
 }
 
 .network-tab:hover {
-    background: #f3f6f8;
+    background: var(--surface-hover);
     color: var(--text);
 }
 

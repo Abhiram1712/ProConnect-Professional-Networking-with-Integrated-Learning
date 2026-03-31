@@ -64,7 +64,7 @@ const MentorDashboard = () => {
     };
 
     return (
-        <div className="dashboard-page container">
+        <div className="dashboard-page container" style={{ animation: 'fadeIn 0.4s ease' }}>
             {/* Header */}
             <div className="dashboard-header">
                 <div>

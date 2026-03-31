@@ -116,7 +116,7 @@ const RecruiterDashboard = () => {
             </div>
 
             {/* Tabs */}
-            <div style={{ display: 'flex', gap: '0.25rem', marginBottom: '1.25rem', background: 'var(--surface)', borderRadius: '10px', padding: '0.3rem', boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>
+            <div className="dashboard-tabs">
                 {[
                     { id: 'overview', label: 'Overview', icon: BarChart3 },
                     { id: 'jobs', label: 'Job Postings', icon: Briefcase },
@@ -125,15 +125,8 @@ const RecruiterDashboard = () => {
                 ].map(tab => (
                     <button key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        style={{
-                            flex: 1, padding: '0.55rem 0.75rem', borderRadius: '8px', border: 'none',
-                            background: activeTab === tab.id ? 'var(--primary)' : 'none',
-                            color: activeTab === tab.id ? 'white' : 'var(--text-muted)',
-                            fontWeight: activeTab === tab.id ? 600 : 500,
-                            cursor: 'pointer', fontSize: '0.85rem', fontFamily: 'inherit',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem',
-                            transition: 'all 0.15s'
-                        }}>
+                        className={`dashboard-tab ${activeTab === tab.id ? 'active' : ''}`}
+                    >
                         <tab.icon size={16} /> {tab.label}
                     </button>
                 ))}

@@ -1,100 +1,62 @@
-import { motion } from 'framer-motion';
-import { ArrowRight, Trophy, BookOpen, User } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, Zap, Users, Code } from 'lucide-react';
 import './Hero.css';
 
 const Hero = () => {
-    const navigate = useNavigate();
+  return (
+    <section className="hero">
+      <div className="hero-bg">
+        <div className="hero-orb orb-1" />
+        <div className="hero-orb orb-2" />
+        <div className="hero-orb orb-3" />
+        <div className="hero-grid" />
+      </div>
 
-    return (
-        <section className="hero">
-            <div className="container hero-container">
-                <motion.div
-                    className="hero-content"
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8 }}
-                >
-                    <motion.h1
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                    >
-                        Unlock Your <span className="highlight">Potential</span>
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.4 }}
-                    >
-                        The world's largest community of students and professionals. Learning, Practice, and Competitions to help you land your dream job.
-                    </motion.p>
+      <div className="container hero-content">
+        <div className="hero-badge">
+          <Zap size={13} />
+          <span>The Professional Growth Platform</span>
+        </div>
 
-                    <div className="hero-buttons">
-                        <motion.button
-                            className="btn btn-primary"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => navigate('/compete')}
-                        >
-                            Explore Opportunities <ArrowRight size={18} />
-                        </motion.button>
-                        <motion.button
-                            className="btn btn-outline"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => navigate('/host')}
-                        >
-                            Host a Challenge
-                        </motion.button>
-                    </div>
+        <h1 className="hero-title">
+          Connect. Learn.{' '}
+          <span className="gradient-text">Grow.</span>
+        </h1>
 
-                    <div className="hero-stats">
-                        <div className="stat">
-                            <Trophy size={24} className="stat-icon" />
-                            <div>
-                                <h4>10M+</h4>
-                                <p>Users</p>
-                            </div>
-                        </div>
-                        <div className="stat">
-                            <BookOpen size={24} className="stat-icon" />
-                            <div>
-                                <h4>50K+</h4>
-                                <p>Opportunities</p>
-                            </div>
-                        </div>
-                        <div className="stat">
-                            <User size={24} className="stat-icon" />
-                            <div>
-                                <h4>500+</h4>
-                                <p>Brands</p>
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
+        <p className="hero-subtitle">
+          Join thousands of professionals accelerating their careers through mentorship,
+          competitions, and real-world opportunities — all in one place.
+        </p>
 
-                <motion.div
-                    className="hero-image"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8 }}
-                >
-                    <div className="image-placeholder">
-                        <div className="floating-card c1">
-                            <Trophy size={32} color="#ffd700" />
-                            <span>Win Prizes</span>
-                        </div>
-                        <div className="floating-card c2">
-                            <BookOpen size={32} color="#0073e6" />
-                            <span>Learn Skills</span>
-                        </div>
-                        <div className="circle-bg"></div>
-                    </div>
-                </motion.div>
-            </div>
-        </section>
-    );
+        <div className="hero-actions">
+          <Link to="/register" className="btn btn-primary btn-lg">
+            Get Started Free <ArrowRight size={18} />
+          </Link>
+          <Link to="/compete" className="btn btn-outline btn-lg">
+            Explore Opportunities
+          </Link>
+        </div>
+
+        <div className="hero-stats">
+          <div className="hero-stat">
+            <div className="hero-stat-num">50K+</div>
+            <div className="hero-stat-label">Professionals</div>
+          </div>
+          <div className="hero-stat-divider" />
+          <div className="hero-stat">
+            <div className="hero-stat-num">1,200+</div>
+            <div className="hero-stat-label">Opportunities</div>
+          </div>
+          <div className="hero-stat-divider" />
+          <div className="hero-stat">
+            <div className="hero-stat-num">200+</div>
+            <div className="hero-stat-label">Expert Mentors</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Hero;
