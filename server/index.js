@@ -23,6 +23,10 @@ const notificationsRouter = require('./routes/notifications');
 const adminRouter = require('./routes/admin');
 const compilerRouter = require('./routes/compiler');
 
+app.get("/", (req, res) => {
+    res.send("API is running 🚀");
+});
+
 app.use('/api/opportunities', opportunitiesRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/profile', profileRouter);
