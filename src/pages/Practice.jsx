@@ -45,8 +45,15 @@ const Practice = () => {
                             <p>{currentTopic?.description}</p>
                         </div>
                     </div>
-                    {/* Force re-render when topic changes to reset language */}
-                    <CodeEditor key={selectedTopic} defaultLanguage={currentTopic?.lang || 'javascript'} />
+                    <CodeEditor 
+                        defaultLanguage={currentTopic?.lang || 'javascript'} 
+                        onLanguageChange={(lang) => {
+                            const newTopic = topics.find(t => t.lang === lang || t.id === lang);
+                            if (newTopic && newTopic.id !== selectedTopic) {
+                                setSelectedTopic(newTopic.id);
+                            }
+                        }}
+                    />
                 </div>
             </div>
         </div>

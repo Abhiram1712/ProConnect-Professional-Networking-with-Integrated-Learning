@@ -3,6 +3,24 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const Notification = require('../models/Notification');
 
+// Create a new notification (used by recruiter to send system messages)
+router.post('/', auth, async (req, res) => {
+    try {
+        const { recipient, message, type } = req.body;
+        const notification = new Notification({
+            recipient,
+            sender: req.user.id,
+            type: type || 'system',
+            message
+        });
+        await notification.save();
+        res.json(notification);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 // Get notifications for current user
 router.get('/', auth, async (req, res) => {
     try {

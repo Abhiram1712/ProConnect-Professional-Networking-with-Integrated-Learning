@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Editor from '@monaco-editor/react';
 import {
     Play, Square, RotateCcw, Copy, Download, Check,
@@ -173,9 +173,18 @@ print("Sum: \\(sum)")
 `,
 };
 
-const CodeEditor = ({ defaultLanguage = "javascript" }) => {
+const CodeEditor = ({ defaultLanguage = "javascript", onLanguageChange }) => {
     const [language, setLanguage] = useState(defaultLanguage);
     const [code, setCode] = useState(CODE_SNIPPETS[defaultLanguage] || CODE_SNIPPETS.javascript);
+
+    useEffect(() => {
+        setLanguage(defaultLanguage);
+        setCode(CODE_SNIPPETS[defaultLanguage] || `// ${defaultLanguage}\n`);
+        setOutput('');
+        setError(null);
+        setExecStats(null);
+    }, [defaultLanguage]);
+
     const [stdin, setStdin] = useState('');
     const [output, setOutput] = useState('');
     const [error, setError] = useState(null);
@@ -201,6 +210,7 @@ const CodeEditor = ({ defaultLanguage = "javascript" }) => {
         setOutput('');
         setError(null);
         setExecStats(null);
+        if (onLanguageChange) onLanguageChange(lang);
     };
 
     const runCode = async () => {

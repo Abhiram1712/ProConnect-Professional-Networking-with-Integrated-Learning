@@ -90,7 +90,7 @@ const Home = () => {
 
             <section className="section bg-light" style={{ background: '#f8f9fa', padding: '4rem 1rem' }}>
                 <div className="container">
-                    <h2 className="text-center" style={{ marginBottom: '3rem' }}>Why JobsGO?</h2>
+                    <h2 className="text-center" style={{ marginBottom: '3rem' }}>Why ProConnect?</h2>
                     <div className="features-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
                         <div className="feature-card text-center" style={{ padding: '2rem', cursor: 'pointer' }} onClick={() => navigate('/learn')}>
                             <img src="https://cdn-icons-png.flaticon.com/512/2997/2997235.png" alt="Learn" width="80" style={{ marginBottom: '1rem' }} />

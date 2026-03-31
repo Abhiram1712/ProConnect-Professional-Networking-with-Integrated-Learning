@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Newspaper, Calendar, Clock, ChevronRight, BookOpen, X } from 'lucide-react';
+import { Newspaper, Calendar, Clock, ChevronRight, BookOpen, X, PenTool } from 'lucide-react';
 
 const BLOGS = [
     {
@@ -82,7 +82,28 @@ Whether you're a developer, designer, or business leader, understanding AI is no
 ];
 
 const Blogs = () => {
+    const [blogs, setBlogs] = useState(BLOGS);
     const [expandedBlog, setExpandedBlog] = useState(null);
+    const [showForm, setShowForm] = useState(false);
+    const [newTitle, setNewTitle] = useState('');
+    const [newContent, setNewContent] = useState('');
+
+    const handleAddBlog = (e) => {
+        e.preventDefault();
+        if (!newTitle.trim() || !newContent.trim()) return;
+        const newBlog = {
+            id: Date.now(),
+            title: newTitle,
+            date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+            author: JSON.parse(localStorage.getItem('user'))?.username || 'Guest',
+            readTime: Math.max(1, Math.ceil(newContent.split(' ').length / 200)) + ' min read',
+            content: newContent
+        };
+        setBlogs([newBlog, ...blogs]);
+        setShowForm(false);
+        setNewTitle('');
+        setNewContent('');
+    };
 
     const toggleBlog = (id) => {
         setExpandedBlog(expandedBlog === id ? null : id);
@@ -90,10 +111,41 @@ const Blogs = () => {
 
     return (
         <div className="container" style={{ padding: '2rem 1rem' }}>
-            <h1 style={{ marginBottom: '0.5rem' }}>Blogs</h1>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>Articles, tutorials, and insights from industry experts.</p>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+                <div>
+                    <h1 style={{ marginBottom: '0.5rem' }}>Blogs</h1>
+                    <p style={{ color: 'var(--text-muted)' }}>Articles, tutorials, and insights from industry experts.</p>
+                </div>
+                <button className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', borderRadius: '20px' }} onClick={() => setShowForm(!showForm)}>
+                    {showForm ? <X size={18} /> : <PenTool size={18} />}
+                    {showForm ? 'Cancel' : 'Write a Blog'}
+                </button>
+            </div>
+
+            {showForm && (
+                <form onSubmit={handleAddBlog} style={{ marginBottom: '2rem', background: '#f9fafb', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                    <h3 style={{ marginBottom: '1rem' }}>Create a New Blog</h3>
+                    <input 
+                        type="text" 
+                        placeholder="Blog Title" 
+                        value={newTitle} 
+                        onChange={e => setNewTitle(e.target.value)} 
+                        style={{ width: '100%', padding: '0.75rem', marginBottom: '1rem', borderRadius: '4px', border: '1px solid #ccc' }} 
+                        required 
+                    />
+                    <textarea 
+                        placeholder="Write your blog content here..." 
+                        value={newContent} 
+                        onChange={e => setNewContent(e.target.value)} 
+                        style={{ width: '100%', padding: '0.75rem', marginBottom: '1rem', borderRadius: '4px', border: '1px solid #ccc', minHeight: '150px' }} 
+                        required 
+                    />
+                    <button type="submit" className="btn btn-primary" style={{ borderRadius: '20px' }}>Publish Blog</button>
+                </form>
+            )}
+
             <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem' }}>
-                {BLOGS.map(blog => (
+                {blogs.map(blog => (
                     <div key={blog.id} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Bell, Grid, Menu, X, Rocket, Shield, Briefcase, BookOpen } from 'lucide-react';
+import { Search, Bell, Code, Menu, X, Rocket, Shield, Briefcase, BookOpen } from 'lucide-react';
 import './Header.css';
 
 const SEARCH_ROUTES = [
@@ -109,7 +109,7 @@ const Header = () => {
       <div className="container header-container">
         <Link to="/" className="logo">
           <Rocket className="logo-icon" size={28} />
-          <span className="logo-text">JobsGO</span>
+          <span className="logo-text">ProConnect</span>
         </Link>
 
         <div className="search-bar" ref={searchRef}>
@@ -196,7 +196,7 @@ const Header = () => {
             </Link>
           )}
           <Link to="/notifications" className="icon-btn"><Bell size={20} /></Link>
-          <Link to="/practice" className="icon-btn"><Grid size={20} /></Link>
+          <Link to="/practice" className="icon-btn"><Code size={20} /></Link>
           {user ? (
             <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
               <Link to="/profile" style={{ fontWeight: '600', color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>

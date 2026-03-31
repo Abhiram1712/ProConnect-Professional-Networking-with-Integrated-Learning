@@ -38,9 +38,13 @@ const Compete = () => {
     };
 
     const getDaysLeft = (deadline) => {
+        if (!deadline) return 'No deadline';
         const diff = new Date(deadline) - new Date();
         const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-        return days > 0 ? days : 0;
+        if (isNaN(days)) return 'No deadline';
+        if (days < 0) return 'Ended';
+        if (days === 0) return 'Ends today';
+        return `${days} days left`;
     };
 
     const filteredOpportunities = filter === 'All'
@@ -95,11 +99,15 @@ const Compete = () => {
                             </div>
 
                             <div className="card-footer" style={{ marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid #f0f0f0', display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                                <span><Calendar size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} /> {getDaysLeft(opp.deadline)} days left</span>
+                                <span><Calendar size={14} style={{ marginRight: '4px', verticalAlign: 'middle' }} /> {getDaysLeft(opp.deadline)}</span>
                                 <span>{opp.reward}</span>
                             </div>
 
-                            <Link to={`/apply/${opp._id}`} className="btn btn-outline" style={{ width: '100%', marginTop: '0.5rem', display: 'block', textAlign: 'center', textDecoration: 'none' }}>Apply Now</Link>
+                            {(!opp.deadline || new Date(opp.deadline) >= new Date().setHours(0, 0, 0, 0)) ? (
+                                <Link to={`/apply/${opp._id}`} className="btn btn-outline" style={{ width: '100%', marginTop: '0.5rem', display: 'block', textAlign: 'center', textDecoration: 'none' }}>Apply Now</Link>
+                            ) : (
+                                <button className="btn btn-outline" disabled style={{ width: '100%', marginTop: '0.5rem', display: 'block', textAlign: 'center', cursor: 'not-allowed', opacity: 0.6 }}>Deadline Passed</button>
+                            )}
                         </motion.div>
                     )) : (
                         <p>No opportunities found for {filter}.</p>

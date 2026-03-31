@@ -441,7 +441,7 @@ const Feed = () => {
                             <span>Profile viewers</span>
                             <span>{profileViews}</span>
                         </div>
-                        <div className="profile-stat-row">
+                        <div className="profile-stat-row" onClick={() => navigate('/network', { state: { tab: 'connections' } })} style={{ cursor: 'pointer' }}>
                             <span>Connections</span>
                             <span>{connectionCount}</span>
                         </div>

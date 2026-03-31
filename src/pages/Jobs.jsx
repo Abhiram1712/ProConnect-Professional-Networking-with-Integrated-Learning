@@ -72,7 +72,11 @@ const Jobs = () => {
                             </div>
                         </div>
 
-                        <Link to={`/apply/${job._id}`} className="btn btn-primary apply-btn">Apply Now</Link>
+                        {(!job.deadline || new Date(job.deadline) >= new Date().setHours(0, 0, 0, 0)) ? (
+                            <Link to={`/apply/${job._id}`} className="btn btn-primary apply-btn">Apply Now</Link>
+                        ) : (
+                            <button className="btn btn-primary apply-btn" disabled style={{ cursor: 'not-allowed', opacity: 0.6 }}>Deadline Passed</button>
+                        )}
                     </div>
                 ))}
             </div>

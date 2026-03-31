@@ -5,6 +5,7 @@ import {
     MessageSquare, Award, DollarSign, Eye, ChevronRight,
     Plus, CheckCircle, XCircle, Video, User
 } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { toast } from 'react-toastify';
 import './Dashboard.css';
 
@@ -109,8 +110,31 @@ const MentorDashboard = () => {
                 </div>
             </div>
 
+            {/* Chart Section */}
+            <div className="dashboard-section full-width" style={{ marginTop: '2rem' }}>
+                <div className="section-header">
+                    <h2><TrendingUp size={18} /> Sessions Overview</h2>
+                </div>
+                <div className="section-body" style={{ height: '300px' }}>
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={[
+                            { name: 'Jan', sessions: 30 },
+                            { name: 'Feb', sessions: 48 },
+                            { name: 'Mar', sessions: 65 },
+                            { name: 'Apr', sessions: 45 },
+                            { name: 'May', sessions: 80 }
+                        ]}>
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Bar dataKey="sessions" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+            </div>
+
             {/* Main Grid */}
-            <div className="dashboard-grid">
+            <div className="dashboard-grid" style={{ marginTop: '2rem' }}>
                 {/* Upcoming Sessions */}
                 <div className="dashboard-section">
                     <div className="section-header">

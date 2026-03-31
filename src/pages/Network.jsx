@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
     UserPlus, UserCheck, X, Users, Search, UserMinus, MoreHorizontal,
     MessageSquare, Eye, Clock, ChevronRight, ChevronDown, Inbox,
@@ -13,7 +13,8 @@ const API = 'http://localhost:5000/api';
 const Network = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
-    const [activeTab, setActiveTab] = useState('suggestions');
+    const location = useLocation();
+    const [activeTab, setActiveTab] = useState(location.state?.tab || 'suggestions');
     const [suggestions, setSuggestions] = useState([]);
     const [receivedRequests, setReceivedRequests] = useState([]);
     const [sentRequests, setSentRequests] = useState([]);

@@ -26,7 +26,7 @@ const Footer = () => {
             <div className="container footer-container">
                 <div className="footer-col">
                     <Link to="/" className="footer-logo">
-                        <Monitor size={24} style={{ marginRight: '8px' }} /> JobsGO
+                        <Monitor size={24} style={{ marginRight: '8px' }} /> ProConnect
                     </Link>
                     <p>Connecting students with opportunities to build their careers. Join millions of other learners and professionals.</p>
                     <div className="social-links">
@@ -76,7 +76,7 @@ const Footer = () => {
 
             <div className="footer-bottom">
                 <div className="container">
-                    <p>&copy; {new Date().getFullYear()} JobsGO. All rights reserved. Built with ❤️.</p>
+                    <p>&copy; {new Date().getFullYear()} ProConnect. All rights reserved. Built with ❤️.</p>
                 </div>
             </div>
         </footer>

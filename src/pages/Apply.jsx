@@ -159,9 +159,15 @@ const Apply = () => {
                             ></textarea>
                         </div>
 
-                        <button type="submit" className="btn btn-primary submit-btn" disabled={submitting} style={{ width: '100%' }}>
-                            {submitting ? 'Submitting...' : 'Submit Application'}
-                        </button>
+                        {(!opportunity.deadline || new Date(opportunity.deadline) >= new Date().setHours(0, 0, 0, 0)) ? (
+                            <button type="submit" className="btn btn-primary submit-btn" disabled={submitting} style={{ width: '100%' }}>
+                                {submitting ? 'Submitting...' : 'Submit Application'}
+                            </button>
+                        ) : (
+                            <button type="button" className="btn btn-primary submit-btn" disabled style={{ width: '100%', cursor: 'not-allowed', opacity: 0.6 }}>
+                                Deadline Passed
+                            </button>
+                        )}
                     </form>
                 </div>
             </div>

@@ -414,7 +414,18 @@ const RecruiterDashboard = () => {
                                             <button className="action-btn-sm primary" style={{ flex: 1, justifyContent: 'center' }} onClick={() => toast.info('Profile view coming soon')}>
                                                 <Eye size={13} /> Profile
                                             </button>
-                                            <button className="action-btn-sm success" style={{ flex: 1, justifyContent: 'center' }} onClick={() => toast.info('Message sent!')}>
+                                            <button className="action-btn-sm success" style={{ flex: 1, justifyContent: 'center' }} onClick={async () => {
+                                                try {
+                                                    await fetch(`${API}/notifications`, {
+                                                        method: 'POST',
+                                                        headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
+                                                        body: JSON.stringify({ recipient: c._id, message: `Recruiter ${user?.username} has sent you a message regarding a job opportunity.`, type: 'system' })
+                                                    });
+                                                    toast.success('Message sent & Candidate notified!');
+                                                } catch (e) {
+                                                    toast.error('Failed to send message');
+                                                }
+                                            }}>
                                                 <Mail size={13} /> Contact
                                             </button>
                                         </div>
