@@ -35,7 +35,7 @@ const Feed = () => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     useEffect(() => {
         if (!token) return;
-        fetch(`${API}/auth`, { headers: { 'x-auth-token': token } })
+        fetch(`${API}/api/auth`, { headers: { 'x-auth-token': token } })
             .then(res => res.json())
             .then(data => {
                 if (data && data._id) {
@@ -100,7 +100,7 @@ const Feed = () => {
                 sort: sortBy,
                 type: activeFilter
             });
-            const res = await fetch(`${API}/posts?${params}`, {
+            const res = await fetch(`${API}/api/posts?${params}`, {
                 headers: { 'x-auth-token': token }
             });
             const data = await res.json();
@@ -127,7 +127,7 @@ const Feed = () => {
 
     const fetchTrending = async () => {
         try {
-            const res = await fetch(`${API}/posts/trending/hashtags`, {
+            const res = await fetch(`${API}/api/posts/trending/hashtags`, {
                 headers: { 'x-auth-token': token }
             });
             const data = await res.json();
@@ -139,7 +139,7 @@ const Feed = () => {
 
     const fetchConnectionCount = async () => {
         try {
-            const res = await fetch(`${API}/connections`, {
+            const res = await fetch(`${API}/api/connections`, {
                 headers: { 'x-auth-token': token }
             });
             const data = await res.json();
@@ -151,7 +151,7 @@ const Feed = () => {
 
     const fetchSuggestions = async () => {
         try {
-            const res = await fetch(`${API}/connections/suggestions`, {
+            const res = await fetch(`${API}/api/connections/suggestions`, {
                 headers: { 'x-auth-token': token }
             });
             const data = await res.json();
@@ -163,7 +163,7 @@ const Feed = () => {
 
     const handleFollow = async (userId) => {
         try {
-            const res = await fetch(`${API}/connections/follow/${userId}`, {
+            const res = await fetch(`${API}/api/connections/follow/${userId}`, {
                 method: 'POST',
                 headers: { 'x-auth-token': token }
             });
@@ -180,7 +180,7 @@ const Feed = () => {
     // ============ REACTIONS ============
     const handleReaction = async (postId, reactionType) => {
         try {
-            const res = await fetch(`${API}/posts/react/${postId}`, {
+            const res = await fetch(`${API}/api/posts/react/${postId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
                 body: JSON.stringify({ reactionType })
@@ -231,7 +231,7 @@ const Feed = () => {
     const handleComment = async (postId) => {
         if (!commentText.trim()) return;
         try {
-            const res = await fetch(`${API}/posts/comment/${postId}`, {
+            const res = await fetch(`${API}/api/posts/comment/${postId}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
                 body: JSON.stringify({ text: commentText })
@@ -249,7 +249,7 @@ const Feed = () => {
     const handleReply = async (postId, commentId) => {
         if (!replyText.trim()) return;
         try {
-            const res = await fetch(`${API}/posts/comment/reply/${postId}/${commentId}`, {
+            const res = await fetch(`${API}/api/posts/comment/reply/${postId}/${commentId}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
                 body: JSON.stringify({ text: replyText })
@@ -267,7 +267,7 @@ const Feed = () => {
 
     const handleCommentLike = async (postId, commentId) => {
         try {
-            const res = await fetch(`${API}/posts/comment/like/${postId}/${commentId}`, {
+            const res = await fetch(`${API}/api/posts/comment/like/${postId}/${commentId}`, {
                 method: 'PUT',
                 headers: { 'x-auth-token': token }
             });
@@ -281,7 +281,7 @@ const Feed = () => {
 
     const handleDeleteComment = async (postId, commentId) => {
         try {
-            const res = await fetch(`${API}/posts/comment/${postId}/${commentId}`, {
+            const res = await fetch(`${API}/api/posts/comment/${postId}/${commentId}`, {
                 method: 'DELETE',
                 headers: { 'x-auth-token': token }
             });
@@ -298,7 +298,7 @@ const Feed = () => {
     // ============ SHARE / REPOST ============
     const handleShare = async (postId) => {
         try {
-            const res = await fetch(`${API}/posts/share/${postId}`, {
+            const res = await fetch(`${API}/api/posts/share/${postId}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
                 body: JSON.stringify({ comment: shareComment })
@@ -319,7 +319,7 @@ const Feed = () => {
     // ============ BOOKMARK ============
     const handleBookmark = async (postId) => {
         try {
-            const res = await fetch(`${API}/posts/bookmark/${postId}`, {
+            const res = await fetch(`${API}/api/posts/bookmark/${postId}`, {
                 method: 'PUT',
                 headers: { 'x-auth-token': token }
             });
@@ -345,7 +345,7 @@ const Feed = () => {
     const handleDeletePost = async (postId) => {
         if (!window.confirm('Are you sure you want to delete this post?')) return;
         try {
-            const res = await fetch(`${API}/posts/${postId}`, {
+            const res = await fetch(`${API}/api/posts/${postId}`, {
                 method: 'DELETE',
                 headers: { 'x-auth-token': token }
             });
@@ -363,7 +363,7 @@ const Feed = () => {
     // ============ POLL VOTING ============
     const handlePollVote = async (postId, optionIndex) => {
         try {
-            const res = await fetch(`${API}/posts/poll/vote/${postId}/${optionIndex}`, {
+            const res = await fetch(`${API}/api/posts/poll/vote/${postId}/${optionIndex}`, {
                 method: 'PUT',
                 headers: { 'x-auth-token': token }
             });
@@ -1072,7 +1072,7 @@ const CreatePostModal = ({ user, token, onClose, onPostCreated }) => {
                 };
             }
 
-            const res = await fetch(`${API}/posts`, {
+            const res = await fetch(`${API}/api/posts`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
                 body: JSON.stringify(body)

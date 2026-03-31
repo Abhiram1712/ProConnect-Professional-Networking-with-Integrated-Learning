@@ -20,7 +20,7 @@ const Profile = () => {
             const token = localStorage.getItem('token');
             if (!token) { setLoading(false); return; }
             try {
-                const res = await fetch(`${API}/profile/me`, {
+                const res = await fetch(`${API}/api/profile/me`, {
                     headers: { 'x-auth-token': token }
                 });
                 const data = await res.json();
@@ -75,7 +75,7 @@ const Profile = () => {
         setSaving(true);
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`${API}/profile/me`, {
+            const res = await fetch(`${API}/api/profile/me`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
                 body: JSON.stringify({

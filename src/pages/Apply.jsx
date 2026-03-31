@@ -29,7 +29,7 @@ const Apply = () => {
         const fetchDetails = async () => {
             try {
                 // Fetch opportunity
-                const oppRes = await fetch(`${API}/opportunities`);
+                const oppRes = await fetch(`${API}/api/opportunities`);
                 const opps = await oppRes.json();
                 const opp = opps.find(o => o._id === id);
 
@@ -58,7 +58,7 @@ const Apply = () => {
                 return;
             }
 
-            const res = await fetch(`${API}/applications/apply/${id}`, {
+            const res = await fetch(`${API}/api/applications/apply/${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -13,7 +13,7 @@ const Compete = () => {
     useEffect(() => {
         // Fetch all opportunities (in a real app, you might only fetch 'Competition' or 'Hackathon' types, 
         // or filter on the client side if the dataset is small).
-        fetch(`${API}/opportunities`)
+        fetch(`${API}/api/opportunities`)
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data)) {

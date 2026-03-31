@@ -26,7 +26,7 @@ const Mentorship = () => {
         if (!token) {
             navigate('/login');
         } else {
-            fetch(`${API}/users?role=mentor`, { headers: { 'x-auth-token': token } })
+            fetch(`${API}/api/users?role=mentor`, { headers: { 'x-auth-token': token } })
                 .then(res => res.json())
                 .then(data => {
                      if (Array.isArray(data) && data.length > 0) {

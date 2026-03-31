@@ -11,7 +11,7 @@ const Jobs = () => {
     const [filter, setFilter] = useState('All');
 
     useEffect(() => {
-        fetch(`${API}/opportunities`)
+        fetch(`${API}/api/opportunities`)
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data)) {

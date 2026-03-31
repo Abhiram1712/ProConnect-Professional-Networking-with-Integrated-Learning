@@ -35,7 +35,7 @@ const Host = () => {
         setLoading(true);
 
         try {
-            const res = await fetch(`${API}/opportunities`, {
+            const res = await fetch(`${API}/api/opportunities`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

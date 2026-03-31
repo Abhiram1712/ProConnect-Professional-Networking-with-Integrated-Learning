@@ -76,7 +76,7 @@ const RecruiterDashboard = () => {
             if (search) params.set('search', search);
             if (skillFilter) params.set('skills', skillFilter);
 
-            const res = await fetch(`${API}/users?${params}`, {
+            const res = await fetch(`${API}/api/users?${params}`, {
                 headers: { 'x-auth-token': token }
             });
             const data = await res.json();
@@ -409,7 +409,7 @@ const RecruiterDashboard = () => {
                                             </button>
                                             <button className="action-btn-sm success" style={{ flex: 1, justifyContent: 'center' }} onClick={async () => {
                                                 try {
-                                                    await fetch(`${API}/notifications`, {
+                                                    await fetch(`${API}/api/notifications`, {
                                                         method: 'POST',
                                                         headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
                                                         body: JSON.stringify({ recipient: c._id, message: `Recruiter ${user?.username} has sent you a message regarding a job opportunity.`, type: 'system' })

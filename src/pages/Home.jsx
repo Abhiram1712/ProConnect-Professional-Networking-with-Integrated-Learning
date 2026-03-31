@@ -21,7 +21,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API}/opportunities`)
+    fetch(`${API}/api/opportunities`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) setOpportunities(data.slice(0, 6));

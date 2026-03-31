@@ -48,7 +48,7 @@ const AdminDashboard = () => {
 
     const fetchStats = async () => {
         try {
-            const res = await fetch(`${API}/admin/stats`, {
+            const res = await fetch(`${API}/api/admin/stats`, {
                 headers: { 'x-auth-token': token }
             });
             if (res.ok) {
@@ -70,7 +70,7 @@ const AdminDashboard = () => {
             });
             if (searchTerm) params.set('search', searchTerm);
 
-            const res = await fetch(`${API}/admin/users?${params}`, {
+            const res = await fetch(`${API}/api/admin/users?${params}`, {
                 headers: { 'x-auth-token': token }
             });
             if (res.ok) {
@@ -94,7 +94,7 @@ const AdminDashboard = () => {
         if (!window.confirm(`Are you sure you want to delete user "${username}"? This will also delete their posts, connections, and applications.`)) return;
 
         try {
-            const res = await fetch(`${API}/admin/users/${userId}`, {
+            const res = await fetch(`${API}/api/admin/users/${userId}`, {
                 method: 'DELETE',
                 headers: { 'x-auth-token': token }
             });
@@ -115,7 +115,7 @@ const AdminDashboard = () => {
         if (!roleModal || !newRole) return;
 
         try {
-            const res = await fetch(`${API}/admin/users/${roleModal._id}/role`, {
+            const res = await fetch(`${API}/api/admin/users/${roleModal._id}/role`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

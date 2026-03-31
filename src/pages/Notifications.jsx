@@ -49,7 +49,7 @@ const Notifications = () => {
             const params = new URLSearchParams({ limit: 50 });
             if (filter === 'unread') params.set('unreadOnly', 'true');
 
-            const res = await fetch(`${API}/notifications?${params}`, {
+            const res = await fetch(`${API}/api/notifications?${params}`, {
                 headers: { 'x-auth-token': token }
             });
             const data = await res.json();
@@ -66,7 +66,7 @@ const Notifications = () => {
 
     const markAsRead = async (id) => {
         try {
-            await fetch(`${API}/notifications/read/${id}`, {
+            await fetch(`${API}/api/notifications/read/${id}`, {
                 method: 'PUT',
                 headers: { 'x-auth-token': token }
             });
@@ -81,7 +81,7 @@ const Notifications = () => {
 
     const markAllRead = async () => {
         try {
-            await fetch(`${API}/notifications/read-all`, {
+            await fetch(`${API}/api/notifications/read-all`, {
                 method: 'PUT',
                 headers: { 'x-auth-token': token }
             });

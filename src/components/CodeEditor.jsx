@@ -240,7 +240,7 @@ const CodeEditor = ({ defaultLanguage = "javascript", onLanguageChange }) => {
         try {
             const startTime = Date.now();
 
-            const res = await fetch(`${API}/compiler/run`, {
+            const res = await fetch(`${API}/api/compiler/run`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -25,7 +25,7 @@ const Network = () => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     useEffect(() => {
         if (!token) return;
-        fetch(`${API}/auth`, { headers: { 'x-auth-token': token } })
+        fetch(`${API}/api/auth`, { headers: { 'x-auth-token': token } })
             .then(res => res.json())
             .then(data => {
                 if (data && data._id) {
@@ -67,7 +67,7 @@ const Network = () => {
 
     const fetchSuggestions = async () => {
         try {
-            const res = await fetch(`${API}/connections/suggestions`, {
+            const res = await fetch(`${API}/api/connections/suggestions`, {
                 headers: { 'x-auth-token': token }
             });
             const data = await res.json();
@@ -79,7 +79,7 @@ const Network = () => {
 
     const fetchReceivedRequests = async () => {
         try {
-            const res = await fetch(`${API}/connections/requests/received`, {
+            const res = await fetch(`${API}/api/connections/requests/received`, {
                 headers: { 'x-auth-token': token }
             });
             const data = await res.json();
@@ -91,7 +91,7 @@ const Network = () => {
 
     const fetchSentRequests = async () => {
         try {
-            const res = await fetch(`${API}/connections/requests/sent`, {
+            const res = await fetch(`${API}/api/connections/requests/sent`, {
                 headers: { 'x-auth-token': token }
             });
             const data = await res.json();
@@ -107,7 +107,7 @@ const Network = () => {
             if (searchTerm) params.set('search', searchTerm);
             if (sortBy) params.set('sort', sortBy);
 
-            const res = await fetch(`${API}/connections?${params}`, {
+            const res = await fetch(`${API}/api/connections?${params}`, {
                 headers: { 'x-auth-token': token }
             });
             const data = await res.json();
@@ -120,7 +120,7 @@ const Network = () => {
     // ============ ACTIONS ============
     const sendRequest = async (userId) => {
         try {
-            const res = await fetch(`${API}/connections/request/${userId}`, {
+            const res = await fetch(`${API}/api/connections/request/${userId}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
                 body: JSON.stringify({
@@ -147,7 +147,7 @@ const Network = () => {
 
     const acceptRequest = async (connectionId) => {
         try {
-            const res = await fetch(`${API}/connections/accept/${connectionId}`, {
+            const res = await fetch(`${API}/api/connections/accept/${connectionId}`, {
                 method: 'PUT',
                 headers: { 'x-auth-token': token }
             });
@@ -164,7 +164,7 @@ const Network = () => {
 
     const rejectRequest = async (connectionId) => {
         try {
-            const res = await fetch(`${API}/connections/reject/${connectionId}`, {
+            const res = await fetch(`${API}/api/connections/reject/${connectionId}`, {
                 method: 'PUT',
                 headers: { 'x-auth-token': token }
             });
@@ -179,7 +179,7 @@ const Network = () => {
 
     const withdrawRequest = async (connectionId) => {
         try {
-            const res = await fetch(`${API}/connections/withdraw/${connectionId}`, {
+            const res = await fetch(`${API}/api/connections/withdraw/${connectionId}`, {
                 method: 'PUT',
                 headers: { 'x-auth-token': token }
             });
@@ -195,7 +195,7 @@ const Network = () => {
     const removeConnection = async (userId) => {
         if (!window.confirm('Are you sure you want to remove this connection?')) return;
         try {
-            const res = await fetch(`${API}/connections/remove/${userId}`, {
+            const res = await fetch(`${API}/api/connections/remove/${userId}`, {
                 method: 'DELETE',
                 headers: { 'x-auth-token': token }
             });
@@ -211,7 +211,7 @@ const Network = () => {
 
     const toggleFollow = async (userId) => {
         try {
-            const res = await fetch(`${API}/connections/follow/${userId}`, {
+            const res = await fetch(`${API}/api/connections/follow/${userId}`, {
                 method: 'POST',
                 headers: { 'x-auth-token': token }
             });
