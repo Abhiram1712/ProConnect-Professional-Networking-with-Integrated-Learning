@@ -54,7 +54,7 @@ mongoose.connect(process.env.MONGO_URI)
     .catch((err) => console.log('MongoDB Connection Error: ' + err.message));
 
 // Start Server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
     seedData();
 });
