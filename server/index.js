@@ -4,8 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-// Force port 10000 on Render exactly, bypassing any errant .env files to fix the 521 load balancer mismatch
-const PORT = process.env.RENDER ? 10000 : (process.env.PORT || 5000);
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
