@@ -4,14 +4,9 @@ import { Calendar, Star, CheckCircle } from 'lucide-react';
 import { toast } from 'react-toastify';
 import './ContentPages.css';
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
-const MENTORS_FALLBACK = [
-    { id: 1, name: 'Alice Chen', role: 'Staff Engineer', company: 'Google', initials: 'AC', skills: ['System Design', 'Go', 'Kubernetes'], rating: 4.9, sessions: 120, rate: '$50/hr' },
-    { id: 2, name: 'Bob Smith', role: 'Product Manager', company: 'Uber', initials: 'BS', skills: ['Product Strategy', 'Analytics', 'Leadership'], rating: 4.7, sessions: 85, rate: '$45/hr' },
-    { id: 3, name: 'Charlie Kim', role: 'Design Lead', company: 'Airbnb', initials: 'CK', skills: ['UI/UX', 'Figma', 'Design Systems'], rating: 4.8, sessions: 64, rate: '$40/hr' },
-    { id: 4, name: 'Diana Ross', role: 'Data Scientist', company: 'Netflix', initials: 'DR', skills: ['Python', 'ML', 'Deep Learning'], rating: 4.9, sessions: 92, rate: '$55/hr' },
-];
+
 
 const Mentorship = () => {
     const [bookedMentors, setBookedMentors] = useState([]);
@@ -41,11 +36,11 @@ const Mentorship = () => {
                             sessions: Math.floor(Math.random() * 100) + 10,
                             rate: '$50/hr'
                          }));
-                         setMentors([...mapped, ...MENTORS_FALLBACK]); // Append fallback for guaranteed data
+                         setMentors(mapped);
                      } else {
-                         setMentors(MENTORS_FALLBACK);
+                         setMentors([]);
                      }
-                }).catch(() => setMentors(MENTORS_FALLBACK));
+                }).catch(() => setMentors([]));
         }
     }, [token, navigate]);
 

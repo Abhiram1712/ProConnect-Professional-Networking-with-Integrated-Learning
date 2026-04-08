@@ -225,7 +225,19 @@
   transform: translateY(-1px);
 }
 
-/* USER BUTTON */
+.icon-btn.highlight-icon {
+  background: var(--surface-2);
+  border: 1.5px solid var(--border);
+}
+
+.icon-btn.highlight-icon:hover {
+  background: var(--primary-bg);
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.2);
+}
+
+/* User BUTTON */
 .user-menu-wrap {
   position: relative;
 }

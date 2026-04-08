@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 // app.use(cors());
 app.use(cors({
-    origin: "https://pro-connect-professional-networking-mu.vercel.app"
+    origin: ["http://localhost:5173", "https://pro-connect-professional-networking-mu.vercel.app"],
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
@@ -25,6 +25,7 @@ const applicationsRouter = require('./routes/applications');
 const notificationsRouter = require('./routes/notifications');
 const adminRouter = require('./routes/admin');
 const compilerRouter = require('./routes/compiler');
+const messagesRouter = require('./routes/messages');
 
 app.get("/", (req, res) => {
     res.send("API is running 🚀");
@@ -40,6 +41,7 @@ app.use('/api/applications', applicationsRouter);
 app.use('/api/notifications', notificationsRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/compiler', compilerRouter);
+app.use('/api/messages', messagesRouter);
 
 // Database Connection
 console.log('Connecting to MongoDB at:', process.env.MONGO_URI);

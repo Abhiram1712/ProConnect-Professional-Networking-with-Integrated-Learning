@@ -4,7 +4,7 @@ import Hero from '../components/Hero';
 import { Calendar, Briefcase, Award, Code, Monitor, ArrowRight, Zap, Users, BookOpen, Trophy } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const FEATURES = [
   { icon: BookOpen, emoji: '📚', title: 'Learn', desc: 'Expand your knowledge with structured courses and expert articles.', path: '/learn', color: '#6366f1' },

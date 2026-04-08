@@ -22,6 +22,7 @@ import Apply from './pages/Apply';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
+import Messages from './pages/Messages';
 
 // Theme context
 export const ThemeContext = createContext({ theme: 'light', toggleTheme: () => {} });
@@ -61,6 +62,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/profile/:id" element={<Profile />} />
               <Route path="/learn" element={<Learn />} />
               <Route path="/practice" element={<Practice />} />
               <Route path="/mentorship" element={<Mentorship />} />
@@ -71,6 +73,7 @@ function App() {
               <Route path="/blogs" element={<Blogs />} />
               <Route path="/feed" element={<Feed />} />
               <Route path="/network" element={<Network />} />
+              <Route path="/messages" element={<Messages />} />
               <Route path="/recruiter/dashboard" element={<RecruiterDashboard />} />
               <Route path="/mentor/dashboard" element={<MentorDashboard />} />
               <Route path="/admin/dashboard" element={<AdminDashboard />} />

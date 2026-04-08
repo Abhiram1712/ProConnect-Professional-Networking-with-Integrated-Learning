@@ -3,6 +3,17 @@ const router = express.Router();
 const Opportunity = require('../models/Opportunity');
 const auth = require('../middleware/auth');
 
+// Get Recruiter's own opportunities
+router.get('/my-opportunities', auth, async (req, res) => {
+    try {
+        const opportunities = await Opportunity.find({ user: req.user.id }).sort({ postedAt: -1 });
+        res.json(opportunities);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 // Get all opportunities
 router.get('/', async (req, res) => {
     try {

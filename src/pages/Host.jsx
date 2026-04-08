@@ -4,7 +4,7 @@ import { Briefcase, Trophy, Code, Plus, DollarSign, Calendar } from 'lucide-reac
 import { toast } from 'react-toastify';
 import './Host.css';
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const Host = () => {
     const navigate = useNavigate();

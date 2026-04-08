@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { Rocket, ArrowRight, KeyRound } from 'lucide-react';
 import './Auth.css';
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });

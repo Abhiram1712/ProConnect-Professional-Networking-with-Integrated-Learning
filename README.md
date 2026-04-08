@@ -1,6 +1,6 @@
-# Unstop Clone
+# ProConnect
 
-This is a clone of the Unstop platform built with the MERN stack (MongoDB, Express, React, Node.js).
+This is a platform built with the MERN stack (MongoDB, Express, React, Node.js).
 
 ## Features
 

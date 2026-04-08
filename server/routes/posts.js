@@ -445,6 +445,7 @@ router.post('/share/:id', auth, async (req, res) => {
         const user = await User.findById(req.user.id).select('username');
 
         // Track the share on original post
+        if (!originalPost.shares) originalPost.shares = [];
         if (!originalPost.shares.includes(req.user.id)) {
             originalPost.shares.push(req.user.id);
             await originalPost.save();

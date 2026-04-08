@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Calendar, Briefcase, Award, Code, Monitor, Filter } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const Compete = () => {
     const [opportunities, setOpportunities] = useState([]);
@@ -17,7 +17,8 @@ const Compete = () => {
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data)) {
-                    setOpportunities(data);
+                    const competeOnly = data.filter(op => op.type !== 'Job' && op.type !== 'Internship');
+                    setOpportunities(competeOnly);
                 } else {
                     console.error("Compete API error: received non-array data", data);
                     setOpportunities([]);
@@ -56,12 +57,12 @@ const Compete = () => {
     return (
         <div className="compete-page container" style={{ padding: '2rem 1rem' }}>
             <header style={{ marginBottom: '2rem' }}>
-                <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Compete & Jobs</h1>
-                <p style={{ color: 'var(--text-muted)' }}>Discover the best hackathons, hiring challenges, and jobs.</p>
+                <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Compete & Hackathons</h1>
+                <p style={{ color: 'var(--text-muted)' }}>Discover the best hackathons, competitions, and challenges.</p>
             </header>
 
             <div className="filters" style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
-                {['All', 'Hackathon', 'Job', 'Internship', 'Competition'].map(type => (
+                {['All', 'Hackathon', 'Competition'].map(type => (
                     <button
                         key={type}
                         onClick={() => setFilter(type)}

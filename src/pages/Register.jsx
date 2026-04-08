@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { Rocket, User, Mail, Lock, ArrowRight, Eye, EyeOff, CheckCircle } from 'lucide-react';
 import './Auth.css';
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const ROLES = [
     { value: 'candidate', icon: '🎓', label: 'Candidate', desc: 'Find jobs & grow your career', color: '#6366f1' },

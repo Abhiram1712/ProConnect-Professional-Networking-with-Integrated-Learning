@@ -75,4 +75,44 @@ router.delete('/:id', auth, async (req, res) => {
     }
 });
 
+// Get Applications for Recruiter's opportunities
+router.get('/recruiter-applications', auth, async (req, res) => {
+    try {
+        // First find all opportunities posted by this recruiter
+        const myOpportunities = await Opportunity.find({ user: req.user.id }).select('_id');
+        const opportunityIds = myOpportunities.map(o => o._id);
+
+        const applications = await Application.find({ opportunity: { $in: opportunityIds } })
+            .populate('opportunity', ['title', 'company', 'type'])
+            .populate('user', ['username', 'profilePicture', 'headline', 'skills'])
+            .sort({ appliedAt: -1 });
+        
+        res.json(applications);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+// Update Application Status (Shortlist/Reject)
+router.put('/status/:id', auth, async (req, res) => {
+    try {
+        const { status } = req.body;
+        const application = await Application.findById(req.params.id).populate('opportunity');
+        if (!application) return res.status(404).json({ msg: 'Application not found' });
+
+        // Verify the recruiter owns the opportunity
+        if (application.opportunity.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'Not authorized' });
+        }
+
+        application.status = status;
+        await application.save();
+        res.json(application);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 module.exports = router;

@@ -4,7 +4,7 @@ import { Briefcase, MapPin, DollarSign, Clock, CheckCircle } from 'lucide-react'
 import { toast } from 'react-toastify';
 import './Apply.css';
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const Apply = () => {
     const { id } = useParams();

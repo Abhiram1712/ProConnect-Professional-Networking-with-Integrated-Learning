@@ -10,7 +10,7 @@ import {
 import { toast } from 'react-toastify';
 import './Feed.css';
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const REACTIONS = [
     { type: 'like', emoji: '👍', label: 'Like', color: '#378fe9' },
@@ -49,6 +49,7 @@ const Feed = () => {
     const [sortBy, setSortBy] = useState('recent');
     const [trending, setTrending] = useState([]);
     const [suggestions, setSuggestions] = useState([]);
+    const [followedUsers, setFollowedUsers] = useState({});
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [activeFilter, setActiveFilter] = useState('all');
@@ -163,6 +164,7 @@ const Feed = () => {
 
     const handleFollow = async (userId) => {
         try {
+            setFollowedUsers(prev => ({ ...prev, [userId]: true }));
             const res = await fetch(`${API}/api/connections/follow/${userId}`, {
                 method: 'POST',
                 headers: { 'x-auth-token': token }
@@ -170,10 +172,20 @@ const Feed = () => {
             if (res.ok) {
                 const data = await res.json();
                 toast.success(data.following ? 'Following started!' : 'Unfollowed');
-                fetchSuggestions(); // refresh suggestions block to pull a new one in
+                setTimeout(() => {
+                    fetchSuggestions(); // refresh suggestions block to pull a new one in
+                    setFollowedUsers(prev => {
+                        const next = { ...prev };
+                        delete next[userId];
+                        return next;
+                    });
+                }, 1000);
+            } else {
+                setFollowedUsers(prev => ({ ...prev, [userId]: false }));
             }
         } catch (err) {
             console.error(err);
+            setFollowedUsers(prev => ({ ...prev, [userId]: false }));
         }
     };
 
@@ -604,7 +616,9 @@ const Feed = () => {
                                         <div className="rec-info">
                                             <h4>{suggestion.username}</h4>
                                             <p>{suggestion.headline || 'Member'}</p>
-                                            <button className="follow-btn" onClick={() => handleFollow(suggestion._id)}>+ Follow</button>
+                                            <button className="follow-btn" onClick={() => handleFollow(suggestion._id)}>
+                                                {followedUsers[suggestion._id] ? 'Following' : '+ Follow'}
+                                            </button>
                                         </div>
                                     </li>
                                 ))}
@@ -699,8 +713,13 @@ const PostCard = ({
             <div className="post-card-inner">
                 {/* Header */}
                 <div className="post-header">
-                    <div className="post-user-icon" style={post.user?.profilePicture ? { backgroundImage: `url(${post.user.profilePicture})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}>{!post.user?.profilePicture && <User size={22} />}</div>
-                    <div className="post-header-info">
+                    <div className="post-user-icon clickable" 
+                        onClick={() => navigate(`/profile/${post.user?._id}`)}
+                        style={post.user?.profilePicture ? { backgroundImage: `url(${post.user.profilePicture})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}
+                    >
+                        {!post.user?.profilePicture && <User size={22} />}
+                    </div>
+                    <div className="post-header-info clickable" onClick={() => navigate(`/profile/${post.user?._id}`)}>
                         <h4>
                             {post.user?.username || 'Unknown User'}
                             <span className="connection-degree">• 1st</span>
@@ -760,7 +779,7 @@ const PostCard = ({
             {/* Original Post Embed (for reposts) */}
             {post.postType === 'repost' && post.originalPost && (
                 <div className="original-post-embed">
-                    <div className="original-header">
+                    <div className="original-header clickable" onClick={() => navigate(`/profile/${post.originalPost.user?._id}`)}>
                         <div className="original-avatar" style={post.originalPost.user?.profilePicture ? { backgroundImage: `url(${post.originalPost.user.profilePicture})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}>{!post.originalPost.user?.profilePicture && <User size={14} />}</div>
                         <div>
                             <strong style={{ fontSize: '0.85rem' }}>{post.originalPost.user?.username}</strong>

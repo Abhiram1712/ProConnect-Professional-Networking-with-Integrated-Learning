@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Search, Bell, Code, Menu, X, Rocket, Shield, Briefcase, BookOpen, Sun, Moon, ChevronDown, LogOut, User } from 'lucide-react';
+import { Search, Bell, Code, Menu, X, Rocket, Shield, Briefcase, BookOpen, Sun, Moon, ChevronDown, LogOut, User, MessageSquare } from 'lucide-react';
 import { useTheme } from '../App';
 import './Header.css';
 
@@ -16,13 +16,14 @@ const SEARCH_ROUTES = [
   { label: 'Host', path: '/host', icon: '🚀', keywords: ['host', 'create', 'publish', 'opportunity', 'post job'] },
   { label: 'Profile', path: '/profile', icon: '👤', keywords: ['profile', 'settings', 'account', 'me', 'my'] },
   { label: 'Notifications', path: '/notifications', icon: '🔔', keywords: ['notifications', 'alerts', 'bell'] },
+  { label: 'Messages', path: '/messages', icon: '💬', keywords: ['messages', 'chat', 'direct message', 'conversation', 'talk'] },
 ];
 
 const NAV_LINKS = [
   { label: 'Feed', path: '/feed' },
   { label: 'Network', path: '/network' },
   { label: 'Learn', path: '/learn' },
-  { label: 'Practice', path: '/practice' },
+  { label: 'Messages', path: '/messages' },
   { label: 'Mentorship', path: '/mentorship' },
   { label: 'Compete', path: '/compete' },
   { label: 'Jobs', path: '/jobs' },
@@ -190,12 +191,16 @@ const Header = () => {
               </Link>
             )}
 
-            <Link to="/notifications" className="icon-btn" title="Notifications">
-              <Bell size={19} />
+            <Link to="/notifications" className="icon-btn highlight-icon" title="Notifications">
+              <Bell size={20} />
             </Link>
 
-            <Link to="/practice" className="icon-btn" title="Practice">
-              <Code size={19} />
+            <Link to="/messages" className="icon-btn highlight-icon" title="Messages">
+              <MessageSquare size={20} />
+            </Link>
+
+            <Link to="/practice" className="icon-btn highlight-icon" title="Practice">
+              <Code size={20} />
             </Link>
 
             {/* Theme Toggle */}

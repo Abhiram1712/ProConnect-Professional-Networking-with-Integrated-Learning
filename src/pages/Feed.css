@@ -290,7 +290,7 @@
 }
 
 .sort-toggle:hover {
-    background: #f3f6f8;
+    background: var(--surface-hover, rgba(0,0,0,0.05));
 }
 
 .sort-toggle .active-sort {
@@ -385,7 +385,7 @@
 }
 
 .post-options-btn:hover {
-    background: #f3f6f8;
+    background: var(--surface-hover, rgba(0,0,0,0.05));
 }
 
 /* Post Dropdown Menu */
@@ -508,7 +508,7 @@
 
 .poll-option:hover {
     border-color: var(--primary);
-    background: #f0f7ff;
+    background: var(--primary-bg, rgba(0,115,230,0.1));
 }
 
 .poll-option.voted {
@@ -560,7 +560,7 @@
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 0.75rem 1rem;
-    background: #fafbfc;
+    background: var(--surface-2, rgba(0,0,0,0.03));
 }
 
 .original-post-embed .original-header {
@@ -573,7 +573,7 @@
 .original-post-embed .original-avatar {
     width: 32px;
     height: 32px;
-    background: #e8f0fe;
+    background: var(--primary-bg, rgba(0,115,230,0.1));
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -865,7 +865,7 @@
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: #e8f0fe;
+    background: var(--primary-bg, rgba(0,115,230,0.1));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -880,7 +880,7 @@
 }
 
 .comment-bubble {
-    background: #f3f6f8;
+    background: var(--surface-hover, rgba(0,0,0,0.05));
     border-radius: 0 12px 12px 12px;
     padding: 0.5rem 0.75rem;
     margin-bottom: 0.15rem;
@@ -1019,7 +1019,7 @@
 }
 
 .trending-item:hover {
-    background: #f3f6f8;
+    background: var(--surface-hover, rgba(0,0,0,0.05));
 }
 
 .trending-tag {
@@ -1180,7 +1180,7 @@
 }
 
 .modal-close-btn:hover {
-    background: #f3f6f8;
+    background: var(--surface-hover, rgba(0,0,0,0.05));
 }
 
 .modal-body {
@@ -1275,7 +1275,7 @@
 
 .add-poll-option-btn:hover {
     border-color: var(--primary);
-    background: #f0f7ff;
+    background: var(--primary-bg, rgba(0,115,230,0.1));
 }
 
 .poll-duration {
@@ -1457,4 +1457,13 @@
     .icon-btn span {
         display: none;
     }
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.clickable:hover h4 {
+    color: var(--primary);
+    text-decoration: underline;
 }

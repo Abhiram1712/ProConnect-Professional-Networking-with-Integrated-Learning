@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Briefcase, MapPin, DollarSign, Clock } from 'lucide-react';
 import './Compete.css';
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const Jobs = () => {
     const [jobs, setJobs] = useState([]);

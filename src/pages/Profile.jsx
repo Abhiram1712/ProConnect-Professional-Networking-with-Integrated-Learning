@@ -1,30 +1,41 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { User, Mail, Book, Code, Save, Camera, Award, Plus, Trash2, Briefcase, GraduationCap, Link as LinkIcon, CheckCircle } from 'lucide-react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { User, Mail, Book, Code, Save, Camera, Award, Plus, Trash2, Briefcase, GraduationCap, Link as LinkIcon, CheckCircle, MessageSquare } from 'lucide-react';
 import { toast } from 'react-toastify';
 import './Profile.css';
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const Profile = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
     const fileInputRef = useRef(null);
     const [formData, setFormData] = useState({
         username: '', email: '', headline: '', bio: '',
-        skills: '', education: '', profilePicture: '', certifications: []
+        skills: '', education: '', profilePicture: '', certifications: [],
+        role: ''
     });
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [activeTab, setActiveTab] = useState('about');
+    const [isMyProfile, setIsMyProfile] = useState(true);
 
     useEffect(() => {
         const fetchProfile = async () => {
             const token = localStorage.getItem('token');
-            if (!token) { setLoading(false); return; }
+            const myUser = JSON.parse(localStorage.getItem('user'));
+            
+            const profileId = id || 'me';
+            setIsMyProfile(!id || id === myUser?._id);
+
             try {
-                const res = await fetch(`${API}/api/profile/me`, {
+                const endpoint = profileId === 'me' ? `${API}/api/profile/me` : `${API}/api/users/${profileId}`;
+                const res = await fetch(endpoint, {
                     headers: { 'x-auth-token': token }
                 });
                 const data = await res.json();
                 setFormData({
+                    _id: data._id,
                     username: data.username || '',
                     email: data.email || '',
                     headline: data.headline || '',
@@ -32,16 +43,18 @@ const Profile = () => {
                     skills: data.skills ? data.skills.join(', ') : '',
                     education: data.education || '',
                     profilePicture: data.profilePicture || '',
-                    certifications: data.certifications || []
+                    certifications: data.certifications || [],
+                    role: data.role || ''
                 });
             } catch (err) {
                 console.error(err);
+                if (id) toast.error("Could not find user profile");
             } finally {
                 setLoading(false);
             }
         };
         fetchProfile();
-    }, []);
+    }, [id]);
 
     const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -135,34 +148,47 @@ const Profile = () => {
                             {/* Avatar */}
                             <div className="profile-card-body-top">
                                 <div className="profile-avatar-container">
-                                    <input
-                                        type="file"
-                                        accept="image/*"
-                                        ref={fileInputRef}
-                                        onChange={handleImageUpload}
-                                        style={{ display: 'none' }}
-                                    />
-                                    <div
-                                        className="profile-avatar-circle"
-                                        onClick={() => fileInputRef.current.click()}
-                                        title="Click to change photo"
-                                    >
+                                        {isMyProfile && <input
+                                            type="file"
+                                            accept="image/*"
+                                            ref={fileInputRef}
+                                            onChange={handleImageUpload}
+                                            style={{ display: 'none' }}
+                                        />}
+                                        <div
+                                            className={`profile-avatar-circle ${isMyProfile ? 'clickable' : ''}`}
+                                            onClick={() => isMyProfile && fileInputRef.current.click()}
+                                            title={isMyProfile ? "Click to change photo" : ""}
+                                        >
                                         {formData.profilePicture ? (
                                             <img src={formData.profilePicture} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
                                         ) : (
                                             <span className="profile-avatar-initials">{initials}</span>
                                         )}
-                                        <div className="profile-avatar-overlay">
-                                            <Camera size={18} />
-                                        </div>
+                                        {isMyProfile && (
+                                            <div className="profile-avatar-overlay">
+                                                <Camera size={18} />
+                                            </div>
+                                        )}
                                     </div>
-                                    <button
-                                        type="button"
-                                        className="change-photo-btn"
-                                        onClick={() => fileInputRef.current.click()}
-                                    >
-                                        Change photo
-                                    </button>
+                                    {isMyProfile && (
+                                        <button
+                                            type="button"
+                                            className="change-photo-btn"
+                                            onClick={() => fileInputRef.current.click()}
+                                        >
+                                            Change photo
+                                        </button>
+                                    )}
+                                    {!isMyProfile && (
+                                        <button 
+                                            className="btn btn-primary" 
+                                            style={{ marginTop: '1rem', width: '100%', gap: '0.5rem' }}
+                                            onClick={() => navigate('/messages', { state: { userId: formData._id } })}
+                                        >
+                                            <MessageSquare size={18} /> Message
+                                        </button>
+                                    )}
                                 </div>
 
                                 <div style={{ textAlign: 'center', padding: '0 1.25rem' }}>
@@ -246,26 +272,26 @@ const Profile = () => {
                                     <div className="form-section-header">
                                         <User size={18} />
                                         <div>
-                                            <h3>Personal Info</h3>
-                                            <p>Your name and professional headline</p>
+                                            <h3>{isMyProfile ? 'Personal Info' : 'About'}</h3>
+                                            <p>{isMyProfile ? 'Your name and professional headline' : 'Professional summary'}</p>
                                         </div>
                                     </div>
 
                                     <div className="form-row">
                                         <div className="form-field">
                                             <label>Full Name</label>
-                                            <input type="text" name="username" value={formData.username} onChange={handleChange} placeholder="Your full name" />
+                                            <input type="text" name="username" value={formData.username} onChange={handleChange} placeholder="Your full name" readOnly={!isMyProfile} />
                                         </div>
                                         <div className="form-field">
                                             <label>Email Address</label>
                                             <input type="email" name="email" value={formData.email} disabled style={{ opacity: 0.6, cursor: 'not-allowed' }} />
-                                            <small>Email cannot be changed</small>
+                                            {isMyProfile && <small>Email cannot be changed</small>}
                                         </div>
                                     </div>
 
                                     <div className="form-field">
                                         <label>Professional Headline</label>
-                                        <input type="text" name="headline" value={formData.headline} onChange={handleChange} placeholder="e.g. Full Stack Developer | Building at Scale" />
+                                        <input type="text" name="headline" value={formData.headline} onChange={handleChange} placeholder="Headline" readOnly={!isMyProfile} />
                                     </div>
 
                                     <div className="form-field">
@@ -274,11 +300,12 @@ const Profile = () => {
                                             name="bio"
                                             value={formData.bio}
                                             onChange={handleChange}
-                                            placeholder="Tell the world about yourself — your passions, experience, and goals..."
+                                            placeholder="User biography..."
                                             rows={5}
                                             style={{ resize: 'vertical' }}
+                                            readOnly={!isMyProfile}
                                         />
-                                        <small>{formData.bio.length}/500</small>
+                                        {isMyProfile && <small>{formData.bio.length}/500</small>}
                                     </div>
                                 </div>
                             )}
@@ -409,18 +436,20 @@ const Profile = () => {
                             )}
 
                             {/* Save Button */}
-                            <div className="profile-form-footer">
-                                <button type="submit" className="btn btn-primary save-profile-btn" disabled={saving}>
-                                    {saving ? (
-                                        <>
-                                            <div style={{ width: 16, height: 16, border: '2px solid rgba(255,255,255,0.4)', borderTopColor: 'white', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
-                                            Saving...
-                                        </>
-                                    ) : (
-                                        <><Save size={16} /> Save Changes</>
-                                    )}
-                                </button>
-                            </div>
+                            {isMyProfile && (
+                                <div className="profile-form-footer">
+                                    <button type="submit" className="btn btn-primary save-profile-btn" disabled={saving}>
+                                        {saving ? (
+                                            <>
+                                                <div style={{ width: 16, height: 16, border: '2px solid rgba(255,255,255,0.4)', borderTopColor: 'white', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+                                                Saving...
+                                            </>
+                                        ) : (
+                                            <><Save size={16} /> Save Changes</>
+                                        )}
+                                    </button>
+                                </div>
+                            )}
                         </form>
                     </div>
                 </div>
